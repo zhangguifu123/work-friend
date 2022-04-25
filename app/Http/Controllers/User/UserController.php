@@ -10,11 +10,11 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function check(Request $request){
-        if ($request->input('js_code') || $request->input('status')) {
+        if ($request->input('js_code') || $request->input('type')) {
             return msg(1, __LINE__);
         }
         $data['js_code'] = $request->input('js_code');
-        $data['status']  = $request->input('status');
+        $data['type']  = $request->input('type');
         $http = new GuzzleHttp\Client;
         $response = $http->get('https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
 ', [
@@ -31,13 +31,13 @@ class UserController extends Controller
         }
         $checkWorker = DB::table('workers')->where('openid', $res['openid'])->first();
         $checkCompany = DB::table('companies')->where('openid', $res['openid'])->first();
-        if ($data['status'] == '1' && $checkWorker){
+        if ($data['type'] == '1' && $checkWorker){
             return msg(0, $checkWorker);
         }
-        if ($data['status'] == '2' && $checkCompany){
+        if ($data['type'] == '2' && $checkCompany){
             return msg(0, $checkCompany);
         }
-        if ($data['status'] == null){
+        if ($data['type'] == null){
             if ($checkWorker){
                 return msg(0, $checkWorker);
             }
@@ -57,16 +57,33 @@ class UserController extends Controller
         }
         $data['status'] = 0;
         $User = '无数据！！';
-        if ($request->input('status') == 1){
+        if ($request->input('type') == 1){
             $User = new Worker($data);
             $User->save();
         }
-        if ($request->input('status') == 2){
+        if ($request->input('type') == 2){
             $User = new Company($data);
             $User->save();
         }
         return msg(0, $User);
 
+    }
+    public function updateStatus(Request $request){
+        if ($request->input('status') || $request->input('type') || $request->route('id')) {
+            return msg(1, __LINE__);
+        }
+        $openid = $request->route('id');
+        $type   = $request->input('type');
+        if ($type == 1){
+            $model = Worker::query();
+        }
+        if ($type == 2){
+            $model = Company::query();
+        }
+        $user = $model->where('openid', $openid)->first();
+        $user->status = $request->input('status');
+        $user->save();
+        return msg(0, $user);
     }
     public function getList(Request $request){
         $type = $request->input('type');
@@ -86,6 +103,7 @@ class UserController extends Controller
         return msg(0, $list);
 
     }
+
     protected function _getList($model, $page){
         //分页，每页10条
         $limit = 10;
@@ -104,10 +122,11 @@ class UserController extends Controller
         }
         return msg(0, $message);
     }
+
     //检查函数
     private function _dataHandle(Request $request){
         //声明理想数据格式
-        if ($request->input('status') == 1){
+        if ($request->input('type') == 1){
             $mod = [
                 "openid"   => ["string"],
                 "uid"      => ["string"],

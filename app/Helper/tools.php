@@ -1,4 +1,6 @@
 <?php
+use App\Models\Company;
+use App\Models\Worker;
 
 function msg($code, $msg) {
 $status = array(
@@ -27,6 +29,15 @@ $status = array(
 
     return json_encode($result, JSON_UNESCAPED_UNICODE);
 }
+
+function checkUserType($type){
+    $userType = array(
+        '1' => Worker::query(),
+        '2' => Company::query(),
+    );
+    return $userType[$type];
+}
+
 function compressedImage($imgsrc, $imgdst) {
     list($width, $height, $type) = getimagesize($imgsrc);
 

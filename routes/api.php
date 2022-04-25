@@ -17,6 +17,7 @@ use App\Http\Controllers\User\UserController;
 
 Route::namespace('Api')->group(function (){
     Route::get('/user/list/{page}',[UserController::class, 'getList']);
+    Route::put('/{id}/update',[UserController::class, 'updateStatus']);
     Route::post('/check',[UserController::class, 'check']);
     Route::post('/authenticate',[UserController::class, 'authenticate']);
 });
