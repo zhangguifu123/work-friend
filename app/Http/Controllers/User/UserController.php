@@ -5,12 +5,13 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Worker;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function check(Request $request){
-        if ($request->input('js_code') || $request->input('type')) {
+        if (!$request->input('js_code') || !$request->input('type')) {
             return msg(1, __LINE__);
         }
         $data['js_code'] = $request->input('js_code');
@@ -69,7 +70,7 @@ class UserController extends Controller
 
     }
     public function updateStatus(Request $request){
-        if ($request->input('status') || $request->input('type') || $request->route('id')) {
+        if (!$request->input('status') || !$request->input('type') || !$request->route('id')) {
             return msg(1, __LINE__);
         }
         $openid = $request->route('id');
