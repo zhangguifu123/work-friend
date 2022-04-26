@@ -15,6 +15,15 @@ class CreateWorkOrdersTable extends Migration
     {
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
+            $table->string('company_id')->index();
+            $table->string('type');
+            $table->string('content');
+            $table->string('place');
+            $table->string('salary');
+            $table->string('education');
+            $table->string('dateline');
+            $table->string('service_charge');
+            $table->string('description');
             $table->timestamps();
         });
     }

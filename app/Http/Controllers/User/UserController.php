@@ -38,14 +38,14 @@ class UserController extends Controller
         if ($data['type'] == '2' && $checkCompany){
             return msg(0, $checkCompany);
         }
-        if ($data['type'] == null){
+        if ($data['type'] == '0'){
             if ($checkWorker){
                 return msg(0, $checkWorker);
             }
             if ($checkCompany){
                 return msg(0, $checkCompany);
             }
-            return msg(11, $res['openid']);
+            return msg(13, $res['openid']);
         }
 
 
@@ -86,6 +86,23 @@ class UserController extends Controller
         $user->save();
         return msg(0, $user);
     }
+
+    public function getOneWorker(Request $request){
+        if (!$request->route('id')) {
+            return msg(3 , __LINE__);
+        }
+        $worker   = Worker::query()->find($request->route('id'));
+        return msg(0, $worker);
+    }
+
+    public function getOneCompany(Request $request){
+        if (!$request->route('id')) {
+            return msg(3 , __LINE__);
+        }
+        $company   = Company::query()->find($request->route('id'));
+        return msg(0, $company);
+    }
+
     public function getList(Request $request){
         $type = $request->input('type');
         $page   = $request->route('page');

@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkOrder extends Model
 {
+    protected $guarded = ['id','created_at','updated_at'];
     use HasFactory;
 }
