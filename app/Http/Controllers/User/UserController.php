@@ -7,6 +7,8 @@ use App\Models\Company;
 use App\Models\Worker;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use GuzzleHttp;
 
 class UserController extends Controller
 {
