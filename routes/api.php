@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\ApplicationOrderController;
+use App\Http\Controllers\TipController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +18,12 @@ use App\Http\Controllers\ApplicationOrderController;
 */
 
 Route::namespace('Api')->group(function (){
+    //Tip
+    //反馈Tip
+    Route::get('/tip/list/{page}',[TipController::class, 'getList']);
+    Route::post('/tip/add',[TipController::class, 'publish']);
+    Route::delete('/tip/{id}',[TipController::class, 'delete']);
+    Route::put('/tip/{id}',[TipController::class, 'update']);
     //用户
     Route::get('/user/list/{page}',[UserController::class, 'getList']);
     Route::get('/worker/{id}',[UserController::class, 'getOneWorker']);
