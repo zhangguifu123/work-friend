@@ -15,6 +15,7 @@ class TipController extends Controller
         if (!is_array($data)) {
             return $data;
         }
+        $data['status'] = 0;
         $tip = new Tip($data);
         if ($tip->save()) {
             return msg(0,$tip->id);
