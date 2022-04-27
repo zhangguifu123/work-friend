@@ -13,7 +13,7 @@ use GuzzleHttp;
 class UserController extends Controller
 {
     public function check(Request $request){
-        if (!$request->input('js_code') || !$request->input('type')) {
+        if (!$request->input('js_code')) {
             return msg(1, __LINE__);
         }
         $data['js_code'] = $request->input('js_code');
@@ -22,8 +22,8 @@ class UserController extends Controller
         $response = $http->get('https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
 ', [
             'query' => [
-                'appid'      => 'wx434e0e175cbdd8a5',
-                'secret'     => 'dc5793927faff4b09e60255fc206ea79',
+                'appid'      => 'wxc48ee9576b6b6236',
+                'secret'     => '0e18a790e1ea9b923feb1c103fe52feb',
                 'grant_type' => 'authorization_code',
                 'js_code'    => $data['js_code'],
             ],
