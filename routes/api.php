@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WorkOrderController;
-use App\Http\Controllers\Manager\MangagerController;
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ApplicationOrderController;
 use App\Http\Controllers\TipController;
 /*
@@ -19,7 +19,7 @@ use App\Http\Controllers\TipController;
 */
 
 Route::namespace('Api')->group(function (){
-    Route::post('/manager/login',[MangagerController::class, 'check']);
+    Route::post('/manager/login',[ManagerController::class, 'check']);
     //反馈Tip
     Route::get('/tip/list/{page}',[TipController::class, 'getList']);
     Route::post('/tip/add',[TipController::class, 'publish']);
