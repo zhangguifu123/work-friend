@@ -28,8 +28,9 @@ Route::namespace('Api')->group(function (){
     Route::post('/applicationOrder/add',[ApplicationOrderController::class, 'make']);
     Route::delete('/applicationOrder/{id}',[ApplicationOrderController::class, 'delete']);
     Route::put('/applicationOrder/{id}',[ApplicationOrderController::class, 'update']);
-    Route::get('/applicationOrder/{uid}',[ApplicationOrderController::class, 'getMeList']);
-    Route::get('/applicationOrder/{cid}',[ApplicationOrderController::class, 'getWorkerList']);
+    Route::get('/applicationOrder/user/{uid}',[ApplicationOrderController::class, 'getMeList']);
+    Route::get('/applicationOrder/workOrder/{wid}',[ApplicationOrderController::class, 'getWorkerList']);
+    Route::get('/applicationOrder/publisher/{pid}',[ApplicationOrderController::class, 'getPublisherList']);
     //招聘订单
     Route::post('/workOrder/add',[WorkOrderController::class, 'publish']);
     Route::delete('/workOrder/{id}',[WorkOrderController::class, 'delete']);

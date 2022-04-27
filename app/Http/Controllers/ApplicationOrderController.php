@@ -29,15 +29,23 @@ class ApplicationOrderController extends Controller
 
 
     public function getMeList(Request $request){
-        if (!$request->route('id')) {
+        if (!$request->route('uid')) {
             return msg(3 , __LINE__);
         }
         $myApplicationOrder   = ApplicationOrder::query()->where('recipient', $request->route('id'))->get()->toArray();
         return msg(0, $myApplicationOrder);
     }
 
+    public function getPublisherList(Request $request){
+        if (!$request->route('pid')) {
+            return msg(3 , __LINE__);
+        }
+        $myApplicationOrder   = ApplicationOrder::query()->where('publisher', $request->route('id'))->get()->toArray();
+        return msg(0, $myApplicationOrder);
+    }
+
     public function getWorkerList(Request $request){
-        if (!$request->route('id')) {
+        if (!$request->route('wid')) {
             return msg(3 , __LINE__);
         }
         $myApplicationOrder   = ApplicationOrder::query()->where('worker_order_id', $request->route('id'))->get()->toArray();
