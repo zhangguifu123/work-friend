@@ -131,7 +131,7 @@ class UserController extends Controller
         $modelSum = $model->count();
         $modelList = $model
             ->limit(10)
-            ->offset($offset)->orderByDesc("games.created_at")
+            ->offset($offset)->orderByDesc("created_at")
             ->get()
             ->toArray();
         $message['gameList'] = $modelList;
