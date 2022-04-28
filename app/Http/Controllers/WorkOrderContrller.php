@@ -39,6 +39,7 @@ class WorkOrderController extends Controller
         $workOrderSum = $workOrder->count();
         $workOrderList = $workOrder
             ->limit(10)
+            ->leftJoin('companies', 'work_orders.company_id', '=', 'companies.id')
             ->offset($offset)->orderByDesc("work_orders.created_at")
             ->get()
             ->toArray();
