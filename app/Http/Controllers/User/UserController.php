@@ -35,16 +35,20 @@ class UserController extends Controller
         $checkWorker = DB::table('workers')->where('openid', $res['openid'])->first();
         $checkCompany = DB::table('companies')->where('openid', $res['openid'])->first();
         if ($data['type'] == '1' && $checkWorker){
+            $checkWorker['type'] = 1;
             return msg(0, $checkWorker);
         }
         if ($data['type'] == '2' && $checkCompany){
+            $checkCompany['type'] = 2;
             return msg(0, $checkCompany);
         }
         if ($data['type'] == '0'){
             if ($checkWorker){
+                $checkWorker['type'] = 1;
                 return msg(0, $checkWorker);
             }
             if ($checkCompany){
+                $checkCompany['type'] = 2;
                 return msg(0, $checkCompany);
             }
             return msg(13, $res['openid']);
