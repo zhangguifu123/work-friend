@@ -44,7 +44,7 @@ class UserController extends Controller
         }
         if ($data['type'] == '0'){
             if ($checkWorker){
-                print_r(json_encode($checkWorker));die();
+                print_r(msg(0,$checkWorker));die();
                 $checkWorker['type'] = 1;
                 return msg(0, $checkWorker);
             }
