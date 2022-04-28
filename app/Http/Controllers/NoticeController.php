@@ -55,15 +55,12 @@ class NoticeController extends Controller
     /** 修改 */
     public function update(Request $request)
     {
-        //通过路由获取前端数据，并判断数据格式
-        $data = $this->_dataHandle($request);
-        //如果$data非函数说明有错误，直接返回
-        if (!is_array($data)) {
-            return $data;
+        if (!$request->route('id')) {
+            return msg(3 , __LINE__);
         }
         //修改
         $notice = Notice::query()->find($request->route('id'));
-        $notice = $notice->update($data);
+        $notice = $notice->update(['status' => 1]);
         if ($notice) {
             return msg(0, __LINE__);
         }

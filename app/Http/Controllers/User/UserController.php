@@ -58,7 +58,7 @@ class UserController extends Controller
         if (!is_array($data)) {
             return $data;
         }
-        $data['status'] = 0;
+        $data['status'] = 2;
         $User = '无数据！！';
         if ($request->input('type') == 1){
             $User = new Worker($data);
