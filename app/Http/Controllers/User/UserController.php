@@ -32,24 +32,29 @@ class UserController extends Controller
         if(!key_exists('openid',$res)){
             return msg(4, $res);
         }
-        $checkWorker = DB::table('workers')->where('openid', $res['openid'])->get()->toArray();
-        $checkCompany = DB::table('companies')->where('openid', $res['openid'])->get()->toArray();
+        $checkWorker = DB::table('workers')->where('openid', $res['openid'])->first();
+        $checkCompany = DB::table('companies')->where('openid', $res['openid'])->first();
+        $result = [];
         if ($data['type'] == '1' && $checkWorker){
-            $checkWorker[0]['type'] = 1;
-            return msg(0, $checkWorker[0]);
+            $result['user'] = $checkWorker;
+            $result['type'] = 1;
+            return msg(0, $result);
         }
         if ($data['type'] == '2' && $checkCompany){
-            $checkCompany[0]['type'] = 2;
-            return msg(0, $checkCompany[0]);
+            $result['user'] = $checkCompany;
+            $result['type'] = 2;
+            return msg(0, $result);
         }
         if ($data['type'] == '0'){
             if ($checkWorker){
-                $checkWorker[0]['type'] = 1;
-                return msg(0, $checkWorker[0]);
+                $result['user'] = $checkWorker;
+                $result['type'] = 1;
+                return msg(0, $result);
             }
             if ($checkCompany){
-                $checkCompany[0]['type'] = 2;
-                return msg(0, $checkCompany[0]);
+                $result['user'] = $checkCompany;
+                $result['type'] = 2;
+                return msg(0, $result);
             }
             return msg(13, $res['openid']);
         }
