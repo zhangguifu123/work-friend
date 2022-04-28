@@ -75,7 +75,7 @@ class WorkOrderController extends Controller
         if (!$request->route('cid')) {
             return msg(3 , __LINE__);
         }
-        $workOrder   = WorkOrder::query()->where('recipient', $request->route('cid'))->get()->toArray();
+        $workOrder   = WorkOrder::query()->where('company_id', $request->route('cid'))->get()->toArray();
         return msg(0, $workOrder);
     }
 
