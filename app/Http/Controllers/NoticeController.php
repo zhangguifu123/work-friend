@@ -32,7 +32,7 @@ class NoticeController extends Controller
         }
         $worker   = Notice::query()->where([
             ['openid', $request->route('id')],
-            ['status', 0]
+            ['status', 2]
         ])->get()->toArray();
         return msg(0, $worker);
     }
@@ -55,12 +55,12 @@ class NoticeController extends Controller
     /** 修改 */
     public function update(Request $request)
     {
-        if (!$request->route('id')) {
+        if (!$request->route('id') || !$request->input('status')) {
             return msg(3 , __LINE__);
         }
         //修改
         $notice = Notice::query()->find($request->route('id'));
-        $notice = $notice->update(['status' => 1]);
+        $notice = $notice->update(['status' => $request->input('status')]);
         if ($notice) {
             return msg(0, __LINE__);
         }

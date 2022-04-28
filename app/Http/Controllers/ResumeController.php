@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tip;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Resume;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
-class TipController extends Controller
+class ResumeController extends Controller
 {
+    //
     //发布
     public function publish(Request $request){
         //通过路由获取前端数据，并判断数据格式
@@ -17,23 +17,22 @@ class TipController extends Controller
             return $data;
         }
         $data['status'] = 2;
-        $tip = new Tip($data);
-        if ($tip->save()) {
-            return msg(0,$tip->id);
+        $resume = new Resume($data);
+        if ($resume->save()) {
+            return msg(0,$resume->id);
         }
         //未知错误
         return msg(4, __LINE__);
     }
-
     /** 拉取列表信息 */
     public function getMeList(Request $request)
     {
         if (!$request->route('id')) {
             return msg(3 , __LINE__);
         }
-        $worker   = Tip::query()->where(
+        $worker   = Resume::query()->where(
             'openid', $request->route('id')
-        )->get()->toArray();
+        )->first();
         return msg(0, $worker);
     }
 
@@ -43,15 +42,15 @@ class TipController extends Controller
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
-        $tip = Tip::query();
-        $tipSum = $tip->count();
-        $tipList = $tip
+        $resume = Resume::query();
+        $resumeSum = $resume->count();
+        $resumeList = $resume
             ->limit(10)
             ->offset($offset)->orderByDesc("created_at")
             ->get()
             ->toArray();
-        $message['tipList'] = $tipList;
-        $message['total']    = $tipSum;
+        $message['resumeList'] = $resumeList;
+        $message['total']    = $resumeSum;
         $message['limit']    = $limit;
         if (isset($message['token'])){
             return msg(13,$message);
@@ -62,11 +61,14 @@ class TipController extends Controller
     /** 删除 */
     public function delete(Request $request)
     {
-        $tip = Tip::query()->find($request->route('id'));
-        if (!$tip){
+        if (!$request->route('id')) {
+            return msg(3 , __LINE__);
+        }
+        $resume = Resume::query()->find($request->route('id'));
+        if (!$resume){
             return msg(11, __LINE__);
         }
-        $tip->delete();
+        $resume->delete();
 
         return msg(0, __LINE__);
     }
@@ -81,9 +83,9 @@ class TipController extends Controller
             return $data;
         }
         //修改
-        $tip = Tip::query()->find($request->route('id'));
-        $tip = $tip->update($data);
-        if ($tip) {
+        $resume = Resume::query()->find($request->route('id'));
+        $resume = $resume->update($data);
+        if ($resume) {
             return msg(0, __LINE__);
         }
         return msg(4, __LINE__);
@@ -93,12 +95,21 @@ class TipController extends Controller
     private function _dataHandle(Request $request = null){
         //声明理想数据格式
         $mod = [
-            "img"           => ["json"],
-            "reporter"      => ["string", "max:20"],
-            "worker_order_id"=> ["string"],
-            "company_id"    => ["string"],
-            "content"       => ["string"],
-            "status"       => ["string", "nullable"],
+            "openid"   => ["string"],
+            "name"     => ["string"],
+            "sex"      => ["string"],
+            "age"      => ["string"],
+            "phone"    => ["string"],
+            "education"=> ["string"],
+            "avatar"   => ["string"],
+
+            "salary"   => ["string"],
+            "position" => ["string"],
+            "city"     => ["string"],
+
+            "internship_experience" => ["string"],
+            "project_experience"    => ["string"],
+            "self_assessment"       => ["string"],
         ];
         //是否缺失参数
         if (!$request->has(array_keys($mod))){
