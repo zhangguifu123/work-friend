@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class TipController extends Controller
 {
-    //发布赛事
+    //发布
     public function publish(Request $request){
         //通过路由获取前端数据，并判断数据格式
         $data = $this->_dataHandle($request);
@@ -45,18 +45,9 @@ class TipController extends Controller
     /** 删除 */
     public function delete(Request $request)
     {
-        $files = [];
         $tip = Tip::query()->find($request->route('id'));
-
-        $imgs = Tip::query()->find($request->route('id'))->img;
-        $imgs = json_decode($imgs);
-        foreach ($imgs as $file){           //遍历结果去掉前缀
-            $replace = str_replace(config("app.url")."/storage/image/","",$file);
-            $files[] = $replace;
-        }
-        $disk = Storage::disk('img');
-        foreach ($files as $file){   //遍历删除
-            $disk->delete($file);
+        if (!$tip){
+            return msg(11, __LINE__);
         }
         $tip->delete();
 
