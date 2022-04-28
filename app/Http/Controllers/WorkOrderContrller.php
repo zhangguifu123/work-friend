@@ -42,7 +42,6 @@ class WorkOrderController extends Controller
             ->offset($offset)->orderByDesc("work_orders.created_at")
             ->get()
             ->toArray();
-        print_r($workOrderList);die();
         $workOrderList = $this->_isCollection($workerId, $workOrderList);
         $message['workOrderList'] = $workOrderList;
         $message['total']    = $workOrderSum;
