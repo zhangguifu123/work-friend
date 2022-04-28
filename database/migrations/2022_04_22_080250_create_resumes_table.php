@@ -26,6 +26,8 @@ class CreateResumesTable extends Migration
             $table->string('position');
             $table->string('salary');
             $table->string('city');
+            $table->string('collection_count');
+
 
             $table->json('internship_experience');
             $table->json('project_experience');

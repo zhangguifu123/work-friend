@@ -24,6 +24,8 @@ class CreateWorkOrdersTable extends Migration
             $table->string('dateline');
             $table->string('service_charge');
             $table->string('description');
+            $table->string('collection_count');
+
             $table->timestamps();
         });
     }

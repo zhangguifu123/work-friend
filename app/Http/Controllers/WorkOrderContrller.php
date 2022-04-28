@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WorkerOrderCollection;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -15,6 +16,7 @@ class WorkOrderController extends Controller
         if (!is_array($data)) {
             return $data;
         }
+        $data['collection_count'] = 0;
         $workOrder = new WorkOrder($data);
 
         if ($workOrder->save()) {
@@ -26,6 +28,10 @@ class WorkOrderController extends Controller
     /** 拉取列表信息 */
     public function getList(Request $request)
     {
+        if (!$request->route('workerId')){
+            return msg(11, __LINE__);
+        }
+        $workerId = $request->route('workerId');
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
@@ -36,6 +42,7 @@ class WorkOrderController extends Controller
             ->offset($offset)->orderByDesc("work_orders.created_at")
             ->get()
             ->toArray();
+        $workOrderList = $this->_isCollection($workerId, $workOrderList);
         $message['workOrderList'] = $workOrderList;
         $message['total']    = $workOrderSum;
         $message['limit']    = $limit;
@@ -43,6 +50,24 @@ class WorkOrderController extends Controller
             return msg(13,$message);
         }
         return msg(0, $message);
+    }
+
+    private function _isCollection($workerId, $resumeList){
+        $workOrderCollection = WorkerOrderCollection::query()->where('worker_id', $workerId)->get()->toArray();
+        $collectionArray  = [];
+        foreach ($workOrderCollection as $value){
+            $collectionArray[] = $value['resume_id'];
+        }
+        $newWorkOrderList = [];
+        foreach ($resumeList as $resume){
+            if (array_search($resume['id'], $collectionArray)) {
+                $resume += ['isCollection' => 1];
+            } else {
+                $resume += ['isCollection' => 0];
+            };
+            $newWorkOrderList[] = $resume;
+        }
+        return $newWorkOrderList;
     }
 
     public function getMeList(Request $request)

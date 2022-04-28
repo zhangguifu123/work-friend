@@ -9,6 +9,7 @@ use App\Http\Controllers\ApplicationOrderController;
 use App\Http\Controllers\TipController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ResumeController;
+use App\Http\Controllers\CollectionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +23,10 @@ use App\Http\Controllers\ResumeController;
 
 Route::namespace('Api')->group(function (){
     Route::post('/manager/login',[ManagerController::class, 'check']);
+    //Collection
+    Route::get('/resume/list/{page}',[ResumeController::class, 'getList']);
+    Route::post('/collection/add',[ResumeController::class, 'publish']);
+    Route::post('/collection/add',[ResumeController::class, 'publish']);
     //Resume
     Route::get('/resume/list/{page}',[ResumeController::class, 'getList']);
     Route::get('/resume/me/{id}',[ResumeController::class, 'getMeList']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Resume;
+use App\Models\ResumeCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,6 +18,7 @@ class ResumeController extends Controller
             return $data;
         }
         $data['status'] = 2;
+        $data['collection_count'] = 0;
         $resume = new Resume($data);
         if ($resume->save()) {
             return msg(0,$resume->id);
@@ -39,6 +41,10 @@ class ResumeController extends Controller
     /** 拉取列表信息 */
     public function getList(Request $request)
     {
+        if (!$request->route('companyId')){
+            return msg(11, __LINE__);
+        }
+        $companyId = $request->route('companyId');
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
@@ -49,6 +55,7 @@ class ResumeController extends Controller
             ->offset($offset)->orderByDesc("created_at")
             ->get()
             ->toArray();
+        $resumeList = $this->_isCollection($companyId, $resumeList);
         $message['resumeList'] = $resumeList;
         $message['total']    = $resumeSum;
         $message['limit']    = $limit;
@@ -57,7 +64,23 @@ class ResumeController extends Controller
         }
         return msg(0, $message);
     }
-
+    private function _isCollection($companyId, $resumeList){
+        $resumeCollection = ResumeCollection::query()->where('company_id', $companyId)->get()->toArray();
+        $collectionArray  = [];
+        foreach ($resumeCollection as $value){
+            $collectionArray[] = $value['resume_id'];
+        }
+        $newResumeList = [];
+        foreach ($resumeList as $resume){
+            if (array_search($resume['id'], $collectionArray)) {
+                $resume += ['isCollection' => 1];
+            } else {
+                $resume += ['isCollection' => 0];
+            };
+            $newResumeList[] = $resume;
+        }
+        return $newResumeList;
+    }
     /** 删除 */
     public function delete(Request $request)
     {
@@ -92,7 +115,7 @@ class ResumeController extends Controller
     }
 
     //检查函数
-    private function _dataHandle(Request $request = null){
+    private function _dataHandle(Request $request){
         //声明理想数据格式
         $mod = [
             "openid"   => ["string"],
