@@ -140,7 +140,7 @@ class UserController extends Controller
         if (isset($message['token'])){
             return 13;
         }
-        return msg(0, $message);
+        return $message;
     }
 
     //检查函数
