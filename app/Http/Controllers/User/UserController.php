@@ -35,22 +35,21 @@ class UserController extends Controller
         $checkWorker = DB::table('workers')->where('openid', $res['openid'])->get()->toArray();
         $checkCompany = DB::table('companies')->where('openid', $res['openid'])->get()->toArray();
         if ($data['type'] == '1' && $checkWorker){
-            $checkWorker['type'] = 1;
-            return msg(0, $checkWorker);
+            $checkWorker[0]['type'] = 1;
+            return msg(0, $checkWorker[0]);
         }
         if ($data['type'] == '2' && $checkCompany){
-            $checkCompany['type'] = 2;
-            return msg(0, $checkCompany);
+            $checkCompany[0]['type'] = 2;
+            return msg(0, $checkCompany[0]);
         }
         if ($data['type'] == '0'){
             if ($checkWorker){
-                print_r(msg(0,$checkWorker));die();
-                $checkWorker['type'] = 1;
-                return msg(0, $checkWorker);
+                $checkWorker[0]['type'] = 1;
+                return msg(0, $checkWorker[0]);
             }
             if ($checkCompany){
-                $checkCompany['type'] = 2;
-                return msg(0, $checkCompany);
+                $checkCompany[0]['type'] = 2;
+                return msg(0, $checkCompany[0]);
             }
             return msg(13, $res['openid']);
         }
