@@ -28,11 +28,10 @@ class WorkOrderController extends Controller
     /** 拉取列表信息 */
     public function getList(Request $request)
     {
-        print_r($request->input('workerId'));die();
-        if (!$request->route('workerId')){
+        if (!$request->input('workerId')){
             return msg(11, __LINE__);
         }
-        $workerId = $request->route('workerId');
+        $workerId = $request->input('workerId');
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
