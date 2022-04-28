@@ -28,7 +28,7 @@ class WorkOrderController extends Controller
     /** 拉取列表信息 */
     public function getList(Request $request)
     {
-        print_r($request->route('workerId'));die();
+        print_r($request->input('workerId'));die();
         if (!$request->route('workerId')){
             return msg(11, __LINE__);
         }
