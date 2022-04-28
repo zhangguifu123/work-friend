@@ -32,8 +32,8 @@ class UserController extends Controller
         if(!key_exists('openid',$res)){
             return msg(4, $res);
         }
-        $checkWorker = DB::table('workers')->where('openid', $res['openid'])->first();
-        $checkCompany = DB::table('companies')->where('openid', $res['openid'])->first();
+        $checkWorker = DB::table('workers')->where('openid', $res['openid'])->get()->toArray();
+        $checkCompany = DB::table('companies')->where('openid', $res['openid'])->get()->toArray();
         if ($data['type'] == '1' && $checkWorker){
             $checkWorker['type'] = 1;
             return msg(0, $checkWorker);
@@ -44,7 +44,7 @@ class UserController extends Controller
         }
         if ($data['type'] == '0'){
             if ($checkWorker){
-                print_r($checkWorker->get()->toArray());die();
+                print_r($checkWorker);die();
                 $checkWorker['type'] = 1;
                 return msg(0, $checkWorker);
             }
