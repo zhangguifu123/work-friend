@@ -86,6 +86,10 @@ class UserController extends Controller
         }
         $openid = $request->route('id');
         $type   = $request->input('type');
+        if ($type == 2 || $type == '2'){
+            $type = 3;
+        }
+        $data = $this->_dataHandle($request);
         if ($type == 1){
             $model = Worker::query();
         }
@@ -93,8 +97,10 @@ class UserController extends Controller
             $model = Company::query();
         }
         $user = $model->where('openid', $openid)->first();
-        $user->status = $request->input('status');
-        $user->save();
+        $user = $user->update($data);
+        if (!$user) {
+            return msg(4, __LINE__);
+        }
         return msg(0, $user);
     }
 
@@ -155,15 +161,15 @@ class UserController extends Controller
     //检查函数
     private function _dataHandle(Request $request){
         //声明理想数据格式
-        if ($request->input('type') == 1){
+        if ($request->input('type') == 2) {
             $mod = [
-                "openid"   => ["string"],
-                "uid"      => ["string"],
-                "name"     => ["string"],
-                "major"    => ["string"],
-                "college"  => ["string"],
-                "phone"    => ["string"],
-                "avatar"   => ["string"],
+                "openid"      => ["string"],
+                "code"        => ["string"],
+                "name"        => ["string"],
+                "industry"    => ["string"],
+                "legal_person"=> ["string"],
+                "phone"       => ["string"],
+                "avatar"      => ["string"],
             ];
         } else {
             $mod = [
@@ -174,6 +180,24 @@ class UserController extends Controller
                 "legal_person"=> ["string"],
                 "phone"       => ["string"],
                 "avatar"      => ["string"],
+
+                "address"      => ["string"],
+                "company_size"      => ["string"],
+                "registered_capital"      => ["string"],
+                "incorporation"      => ["string"],
+                "introduce"      => ["string"],
+            ];
+        }
+
+        if ($request->input('type') == 1){
+            $mod = [
+                "openid"   => ["string"],
+                "uid"      => ["string"],
+                "name"     => ["string"],
+                "major"    => ["string"],
+                "college"  => ["string"],
+                "phone"    => ["string"],
+                "avatar"   => ["string"],
             ];
         }
 

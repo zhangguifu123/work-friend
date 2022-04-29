@@ -24,11 +24,11 @@ class CreateCompaniesTable extends Migration
             $table->string('avatar');
             $table->string('status');
 
-            $table->string('address');
-            $table->string('company_size');
-            $table->string('registered_capital');
-            $table->string('incorporation');
-            $table->string('introduce');
+            $table->string('address')->comment('公司地址');
+            $table->string('company_size')->comment('公司规模');
+            $table->string('registered_capital')->comment('注册资金');
+            $table->string('incorporation')->comment('成立日期');
+            $table->string('introduce')->comment('公司介绍');
 
             $table->timestamps();
         });
