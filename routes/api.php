@@ -39,7 +39,7 @@ Route::namespace('Api')->group(function (){
     Route::delete('/resume/{id}',[ResumeController::class, 'delete']);
     Route::put('/resume/{id}',[ResumeController::class, 'update']);
     //Notice
-    Route::get('/notice/list/{page}',[NoticeController::class, 'getList']);
+    Route::get('/notice/me/{id}',[NoticeController::class, 'getList']);
     Route::post('/notice/add',[NoticeController::class, 'publish']);
     Route::delete('/notice/{id}',[NoticeController::class, 'delete']);
     Route::put('/notice/{id}',[NoticeController::class, 'update']);
