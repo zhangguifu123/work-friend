@@ -16,9 +16,8 @@ class CreateWorkOrdersTable extends Migration
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
             $table->string('openid')->index();
-            $table->string('type');
-//            $table->string('user_type');
-//            $table->string('order_type');
+            $table->string('user_type');
+            $table->string('order_type');
             $table->string('content');
             $table->string('place');
             $table->string('salary');
