@@ -90,6 +90,7 @@ class UserController extends Controller
             $type = 3;
         }
         $data = $this->_dataHandle($request);
+        print_r($data);die();
         $data += ['status' => $request->input('status')];
         $model = Worker::query();
         if ($type == 1){
