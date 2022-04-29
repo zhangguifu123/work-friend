@@ -92,9 +92,8 @@ class UserController extends Controller
         } else {
             $data = $this->_dataHandle($request);
         }
-        print_r(Gettype($request->input('status')));
-        print_r($request->input('status'));die();
-        $data += ['status' => $request->input('status')];
+        $status = $request->input('status');
+        $data += ["status" => $status];
         $model = Worker::query();
         if ($type == 1){
             $model = Worker::query();
