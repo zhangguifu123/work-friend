@@ -16,7 +16,7 @@ class NoticeController extends Controller
         if (!is_array($data)) {
             return $data;
         }
-        $data['status'] = 0;
+        $data['status'] = 2;
         $notice = new Notice($data);
         if ($notice->save()) {
             return msg(0,$notice->id);
