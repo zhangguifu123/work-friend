@@ -32,11 +32,10 @@ class UserController extends Controller
         if(!key_exists('openid',$res)){
             return msg(4, $res);
         }
-        print_r(1);
         $checkWorker = DB::table('workers')->where('openid', $res['openid'])->first();
         $checkCompany = DB::table('companies')->where('openid', $res['openid'])->first();
         $result = [];
-        print_r(2);
+        print_r($checkWorker);print_r($data);
         if ($data['type'] == '1' && $checkWorker){
             $result['user'] = $checkWorker;
             $result['type'] = 1;
