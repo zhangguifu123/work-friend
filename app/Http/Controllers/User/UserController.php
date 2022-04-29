@@ -99,11 +99,11 @@ class UserController extends Controller
             $model = Company::query();
         }
         $user = $model->where('openid', $openid)->first();
-        $user->update($data);
-        if (!$user) {
-            return msg(4, __LINE__);
+
+        if ($user->update($data)) {
+            return msg(0, $user);
         }
-        return msg(0, $user);
+        return msg(4, __LINE__);
     }
 
     public function getOneWorker(Request $request){
