@@ -140,7 +140,7 @@ class WorkOrderController extends Controller
     private function _dataHandle(Request $request = null){
         //声明理想数据格式
         $mod = [
-            "openid"   => ["string"],
+            "openid"       => ["string"],
             "type"         => ["string"],
             "content"      => ["string"],
             "place"        => ["string"],
