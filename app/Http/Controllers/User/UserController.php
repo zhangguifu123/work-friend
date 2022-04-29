@@ -95,11 +95,10 @@ class UserController extends Controller
         $status = $request->input('status');
         $data += ["status" => (int)$status];
         $model = Worker::query();
-        print_r(Gettype($type));die();
-        if ($type == 1){
+        if ($type == "1"){
             $model = Worker::query();
         }
-        if ($type == 2){
+        if ($type == "2"){
             $model = Company::query();
         }
         $user = $model->where('openid', $openid)->first();
