@@ -11,6 +11,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\AvatarController;
+use App\Http\Controllers\BannerController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -56,6 +57,9 @@ Route::namespace('Api')->group(function (){
     Route::post('/check',[UserController::class, 'check']);
     Route::post('/authenticate',[UserController::class, 'authenticate']);
     Route::post('/avatar',[AvatarController::class, 'upload']);
+    //Banner
+    Route::post('/banner/upload',[BannerController::class, 'upload']);
+    Route::post('/banner/list/{page}',[BannerController::class, 'getList']);
     //应聘订单
     Route::post('/applicationOrder/add',[ApplicationOrderController::class, 'make']);
     Route::delete('/applicationOrder/{id}',[ApplicationOrderController::class, 'delete']);

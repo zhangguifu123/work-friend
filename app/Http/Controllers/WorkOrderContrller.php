@@ -76,7 +76,9 @@ class WorkOrderController extends Controller
         if (!$request->route('cid')) {
             return msg(3 , __LINE__);
         }
-        $workOrder   = WorkOrder::query()->where('company_id', $request->route('cid'))->get()->toArray();
+        $workOrder   = WorkOrder::query()
+            ->leftJoin('companies', 'work_orders.company_id', '=', 'companies.id')
+            ->where('company_id', $request->route('cid'))->get()->toArray();
         return msg(0, $workOrder);
     }
 
@@ -85,7 +87,9 @@ class WorkOrderController extends Controller
         if (!$request->route('id')) {
             return msg(3 , __LINE__);
         }
-        $workOrder   = WorkOrder::query()->find($request->route('id'));
+        $workOrder   = WorkOrder::query()
+            ->leftJoin('companies', 'work_orders.company_id', '=', 'companies.id')
+            ->find($request->route('id'));
         return msg(0, $workOrder);
     }
 
