@@ -29,13 +29,14 @@ class UserController extends Controller
             ],
         ]);
         $res    = json_decode( $response->getBody(), true);
-        print_r($res);
         if(!key_exists('openid',$res)){
             return msg(4, $res);
         }
+        print_r(1);
         $checkWorker = DB::table('workers')->where('openid', $res['openid'])->first();
         $checkCompany = DB::table('companies')->where('openid', $res['openid'])->first();
         $result = [];
+        print_r(2);
         if ($data['type'] == '1' && $checkWorker){
             $result['user'] = $checkWorker;
             $result['type'] = 1;
