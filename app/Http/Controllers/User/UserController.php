@@ -28,8 +28,8 @@ class UserController extends Controller
                 'js_code'    => $data['js_code'],
             ],
         ]);
-        print_r(1);
         $res    = json_decode( $response->getBody(), true);
+        print_r($res);
         if(!key_exists('openid',$res)){
             return msg(4, $res);
         }
