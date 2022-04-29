@@ -66,7 +66,7 @@ class UserController extends Controller
         if (!is_array($data)) {
             return $data;
         }
-        $data['status'] = 2;
+        $data['status'] = "2";
         $User = '无数据！！';
         if ($request->input('type') == 1){
             $User = new Worker($data);
@@ -129,11 +129,11 @@ class UserController extends Controller
         $type = $request->input('type');
         $page   = $request->route('page');
         $list   = 13;
-        if ($type == 1){
+        if ($type == "1"){
             $model = Worker::query();
             $list = $this->_getList($model, $page);
         }
-        if ($type == 2){
+        if ($type == "2"){
             $model = Company::query();
             $list = $this->_getList($model, $page);
         }
@@ -196,7 +196,7 @@ class UserController extends Controller
     //检查函数
     private function _dataHandle(Request $request){
         //声明理想数据格式
-        if ($request->input('type') == 2) {
+        if ($request->input('type') == "2") {
             $mod = [
                 "openid"      => ["string"],
                 "code"        => ["string"],
