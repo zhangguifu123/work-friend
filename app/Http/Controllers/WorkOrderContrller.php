@@ -44,7 +44,7 @@ class WorkOrderController extends Controller
             ->leftJoin('companies', 'work_orders.openid', '=', 'companies.openid')
             ->offset($offset)->orderByDesc("work_orders.created_at")
             ->get([
-                "work_orders.id", "openid" , "workers.name as worker_name", "workers.avatar as worker_avatar",
+                "work_orders.id", "work_orders.openid" , "workers.name as worker_name", "workers.avatar as worker_avatar",
                 "type", "companies.name as company_name", "companies.avatar as company_avatar", "content", "place", "salary", "education", "dateline", "service_charge", "description", "collection_count",
             ])
             ->toArray();
