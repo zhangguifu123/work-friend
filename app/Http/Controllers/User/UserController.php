@@ -35,9 +35,6 @@ class UserController extends Controller
         $checkWorker = DB::table('workers')->where('openid', $res['openid'])->first();
         $checkCompany = DB::table('companies')->where('openid', $res['openid'])->first();
         $result = [];
-        print_r($checkWorker);
-        print_r(1);
-        print_r($data);
         if ($data['type'] == '1' && $checkWorker){
             $result['user'] = $checkWorker;
             $result['type'] = 1;
@@ -59,9 +56,8 @@ class UserController extends Controller
                 $result['type'] = 2;
                 return msg(0, $result);
             }
-            return msg(13, $res['openid']);
         }
-
+        return msg(13, $res['openid']);
 
     }
     public function authenticate(Request $request){
