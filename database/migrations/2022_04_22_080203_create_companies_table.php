@@ -23,6 +23,13 @@ class CreateCompaniesTable extends Migration
             $table->string('phone');
             $table->string('avatar');
             $table->string('status');
+
+            $table->string('address');
+            $table->string('company_size');
+            $table->string('registered_capital');
+            $table->string('incorporation');
+            $table->string('introduce');
+
             $table->timestamps();
         });
     }

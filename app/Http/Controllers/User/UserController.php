@@ -73,6 +73,7 @@ class UserController extends Controller
             $User->save();
         }
         if ($request->input('type') == 2){
+            $data += ['address' => 'xxx', 'company_size' => 'xxx', 'registered_capital' => 'xxx', 'incorporation' => 'xxx', 'introduce' => 'xxx'];
             $User = new Company($data);
             $User->save();
         }

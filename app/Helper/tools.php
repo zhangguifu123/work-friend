@@ -1,6 +1,10 @@
 <?php
 use App\Models\Company;
 use App\Models\Worker;
+use Illuminate\Http\Request;
+function handleUid(Request $request) {
+
+}
 
 function msg($code, $msg) {
 $status = array(

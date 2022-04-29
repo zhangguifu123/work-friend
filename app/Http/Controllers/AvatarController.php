@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Worker;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,9 +26,13 @@ class AvatarController extends Controller
             }
             return msg(1, '非法参数' . __LINE__);
         }
+        $uid = $request->route('id');
+        $type = $request->input('type');
 
-        //若没有session 判断remember
-        $uid = handleUid($request);
+        if ($type == 1){
+            $model = Worker::query()->find($uid);
+        };
+
 
         //删除以前的头像
         $old = User::query()->find($uid)->avatar;
