@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Worker;
 use App\User;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class AvatarController extends Controller
     //头像上传
     public function upload(Request $request) {
         //检查文件
-        if (!$request->hasFile('image')) {
+        if (!$request->hasFile('image') || !$request->input('type')) {
             return msg(1, "缺失参数" . __LINE__);
         }
         $data = $request->only('image');
@@ -31,13 +32,13 @@ class AvatarController extends Controller
 
         if ($type == 1){
             $model = Worker::query()->find($uid);
+        } else {
+            $model = Company::query()->find($uid);
         };
-
-
+        $old = $model->avatar;
         //删除以前的头像
-        $old = User::query()->find($uid)->avatar;
         if ($old){
-            $old_avatar = json_decode($old);
+            $old_avatar = $old;
             $replace = str_replace(config("app.url")."/storage/avatar/","",$old_avatar);
             $disk = Storage::disk('avatar');
             $disk->delete($replace);
@@ -59,8 +60,8 @@ class AvatarController extends Controller
         }
         $pic_url = config("app.url")."/storage/avatar/".$all_name;
 
-        $user = User::query()->find($uid);
-        $data = ['avatar' => json_encode($pic_url)];
+        $user = $model;
+        $data = ['avatar' => $pic_url];
         if ($user->update($data)){
             return msg(0, $pic_url);
         }else{

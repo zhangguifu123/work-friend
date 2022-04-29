@@ -10,6 +10,7 @@ use App\Http\Controllers\TipController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\AvatarController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -54,6 +55,7 @@ Route::namespace('Api')->group(function (){
     Route::put('/{id}/update',[UserController::class, 'updateStatus']);
     Route::post('/check',[UserController::class, 'check']);
     Route::post('/authenticate',[UserController::class, 'authenticate']);
+    Route::post('/avatar',[AvatarController::class, 'upload']);
     //应聘订单
     Route::post('/applicationOrder/add',[ApplicationOrderController::class, 'make']);
     Route::delete('/applicationOrder/{id}',[ApplicationOrderController::class, 'delete']);
