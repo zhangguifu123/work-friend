@@ -24,9 +24,12 @@ use App\Http\Controllers\CollectionController;
 Route::namespace('Api')->group(function (){
     Route::post('/manager/login',[ManagerController::class, 'check']);
     //Collection
-    Route::get('/resume/list/{page}',[ResumeController::class, 'getList']);
-    Route::post('/collection/add',[ResumeController::class, 'publish']);
-    Route::post('/collection/add',[ResumeController::class, 'publish']);
+    Route::get('/collection/resume/{id}',[CollectionController::class, 'getCompanyCollectionList']);
+    Route::get('/collection/workerOrder/{id}',[CollectionController::class, 'getWorkerCollectionList']);
+    Route::post('/collection/resume',[CollectionController::class, 'addResumeCollection']);
+    Route::post('/collection/workerOrder',[CollectionController::class, 'addWorkOrderCollection']);
+    Route::delete('/collection/resume/{id}',[CollectionController::class, 'deleteResumeCollection']);
+    Route::delete('/collection/workerOrder/{id}',[CollectionController::class, 'deleteWorkOrderCollection']);
     //Resume
     Route::get('/resume/list/{page}',[ResumeController::class, 'getList']);
     Route::get('/resume/me/{id}',[ResumeController::class, 'getMeList']);

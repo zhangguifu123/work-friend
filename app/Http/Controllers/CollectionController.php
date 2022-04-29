@@ -43,10 +43,10 @@ class CollectionController extends Controller
     /** 删除 */
     public function deleteResumeCollection(Request $request)
     {
-        if (!$request->route('id')) {
+        if (!$request->route('id') || !$request->input('resumeId')) {
             return msg(3 , __LINE__);
         }
-        $resume = Resume::query()->find('resume_id');
+        $resume = Resume::query()->find($request->input('resumeId'));
         if (!$resume){
             return msg(11, __LINE__);
         }
@@ -91,10 +91,10 @@ class CollectionController extends Controller
     /** 删除 */
     public function deleteWorkOrderCollection(Request $request)
     {
-        if (!$request->route('id')) {
+        if (!$request->route('id') || !$request->input('workOrderId')) {
             return msg(3 , __LINE__);
         }
-        $workOrder = WorkOrder::query()->find('work_order_id');
+        $workOrder = WorkOrder::query()->find($request->input('workOrderId'));
         if (!$workOrder){
             return msg(11, __LINE__);
         }
