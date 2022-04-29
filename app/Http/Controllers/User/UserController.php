@@ -86,11 +86,13 @@ class UserController extends Controller
         }
         $openid = $request->route('id');
         $type   = $request->input('type');
+
         if ($type == 2 || $type == '2'){
-            $type = 3;
+            $data = $this->_updateDataHandle($request);
+        } else {
+            $data = $this->_dataHandle($request);
         }
-        $data = $this->_dataHandle($request);
-        print_r($data);die();
+
         $data += ['status' => $request->input('status')];
         $model = Worker::query();
         if ($type == 1){
@@ -160,7 +162,37 @@ class UserController extends Controller
         }
         return $message;
     }
+//检查函数
+    private function _updateDataHandle(Request $request){
+        //声明理想数据格式
+        $mod = [
+            "openid"      => ["string"],
+            "code"        => ["string"],
+            "name"        => ["string"],
+            "industry"    => ["string"],
+            "legal_person"=> ["string"],
+            "phone"       => ["string"],
+            "avatar"      => ["string"],
 
+            "address"      => ["string"],
+            "company_size"      => ["string"],
+            "registered_capital"      => ["string"],
+            "incorporation"      => ["string"],
+            "introduce"      => ["string"],
+        ];
+
+        //是否缺失参数
+        if (!$request->has(array_keys($mod))){
+            return msg(1,__LINE__);
+        }
+        //提取数据
+        $data = $request->only(array_keys($mod));
+        //判断数据格式
+        if (Validator::make($data, $mod)->fails()) {
+            return msg(3, '数据格式错误' . __LINE__);
+        };
+        return $data;
+    }
     //检查函数
     private function _dataHandle(Request $request){
         //声明理想数据格式
@@ -175,24 +207,6 @@ class UserController extends Controller
                 "avatar"      => ["string"],
             ];
         } else {
-            $mod = [
-                "openid"      => ["string"],
-                "code"        => ["string"],
-                "name"        => ["string"],
-                "industry"    => ["string"],
-                "legal_person"=> ["string"],
-                "phone"       => ["string"],
-                "avatar"      => ["string"],
-
-                "address"      => ["string"],
-                "company_size"      => ["string"],
-                "registered_capital"      => ["string"],
-                "incorporation"      => ["string"],
-                "introduce"      => ["string"],
-            ];
-        }
-
-        if ($request->input('type') == 1){
             $mod = [
                 "openid"   => ["string"],
                 "uid"      => ["string"],
