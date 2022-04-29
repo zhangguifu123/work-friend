@@ -91,7 +91,6 @@ class UserController extends Controller
         }
         $data = $this->_dataHandle($request);
         $data += ['status' => $request->input('status')];
-        $data->save();
         $model = Worker::query();
         if ($type == 1){
             $model = Worker::query();
@@ -100,7 +99,7 @@ class UserController extends Controller
             $model = Company::query();
         }
         $user = $model->where('openid', $openid)->first();
-        $user = $user->update($data);
+        $user->update($data);
         if (!$user) {
             return msg(4, __LINE__);
         }
