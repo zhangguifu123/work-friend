@@ -32,7 +32,7 @@ class WorkOrderController extends Controller
             return msg(11, __LINE__);
         }
         $workerId = $request->input('workerId');
-        $type     = $request->input('order_type');
+//        $type     = $request->input('order_type');
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
