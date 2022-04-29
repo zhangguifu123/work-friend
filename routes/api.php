@@ -72,6 +72,6 @@ Route::namespace('Api')->group(function (){
     Route::delete('/workOrder/{id}',[WorkOrderController::class, 'delete']);
     Route::put('/workOrder/{id}',[WorkOrderController::class, 'update']);
     Route::get('/workOrder/{id}',[WorkOrderController::class, 'getOneOrder']);
-    Route::get('/workOrder/{cid}',[WorkOrderController::class, 'getMeList']);
+    Route::get('/workOrder/{id}',[WorkOrderController::class, 'getMeList']);
     Route::get('/workOrder/list/{page}',[WorkOrderController::class, 'getList']);
 });

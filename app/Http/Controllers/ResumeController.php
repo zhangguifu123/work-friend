@@ -53,7 +53,6 @@ class ResumeController extends Controller
         $resumeList = $resume
             ->limit(10)
             ->offset($offset)->orderByDesc("created_at")
-            ->leftJoin('workers', 'resumes.id', '=', 'workers.id')
             ->get()
             ->toArray();
         $resumeList = $this->_isCollection($companyId, $resumeList);

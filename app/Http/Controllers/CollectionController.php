@@ -18,7 +18,7 @@ class CollectionController extends Controller
         if (!is_array($data)) {
             return $data;
         }
-        $resume = Resume::query()->find('resume_id');
+        $resume = Resume::query()->find($data['resume_id'] );
         if (!$resume){
             return msg(11, __LINE__);
         }
@@ -36,8 +36,13 @@ class CollectionController extends Controller
         if (!$request->route('id')) {
             return msg(3 , __LINE__);
         }
-        $worker   = resumeCollection::query()->where('company_id', $request->route('id'))->get()->toArray();
-        return msg(0, $worker);
+        $resume   = resumeCollection::query()->where('company_id', $request->route('id'))->get()->toArray();
+        $resumeIds = [];
+        foreach ($resume as $value){
+            $resumeIds[] = $value['resume_id'];
+        }
+        $resumeList = Resume::query()->whereIn('id',$resumeIds)->get()->toArray();
+        return msg(0, $resumeList);
     }
 
     /** 删除 */
@@ -84,8 +89,13 @@ class CollectionController extends Controller
         if (!$request->route('id')) {
             return msg(3 , __LINE__);
         }
-        $worker   = WorkerOrderCollection::query()->where('company_id', $request->route('id'))->get()->toArray();
-        return msg(0, $worker);
+        $worker   = WorkerOrderCollection::query()->where('worker_id', $request->route('id'))->get()->toArray();
+        $workerOrderIds = [];
+        foreach ($worker as $value){
+            $workerOrderIds[] = $value['worker_order_id'];
+        }
+        $workOrderList = WorkOrder::query()->whereIn('id',$workerOrderIds)->get()->toArray();
+        return msg(0, $workOrderList);
     }
 
     /** 删除 */

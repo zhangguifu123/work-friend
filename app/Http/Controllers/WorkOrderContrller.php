@@ -32,17 +32,33 @@ class WorkOrderController extends Controller
             return msg(11, __LINE__);
         }
         $workerId = $request->input('workerId');
+        $type     = $request->input('type');
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
         $workOrder = WorkOrder::query();
         $workOrderSum = $workOrder->count();
-        $workOrderList = $workOrder
-            ->limit(10)
-            ->leftJoin('companies', 'work_orders.company_id', '=', 'companies.id')
-            ->offset($offset)->orderByDesc("work_orders.created_at")
-            ->get()
-            ->toArray();
+        if ($type == 1){
+            $workOrderList = $workOrder
+                ->limit(10)
+                ->leftJoin('workers', 'work_orders.openid', '=', 'workers.openid')
+                ->offset($offset)->orderByDesc("work_orders.created_at")
+                ->get([
+                    "work_orders.id", "openid" , "workers.name as worker_name", "workers.avatar as worker_avatar",
+                    "type", "content", "place", "salary", "education", "dateline", "service_charge", "description", "collection_count",
+                ])
+                ->toArray();
+        } else {
+            $workOrderList = $workOrder
+                ->limit(10)
+                ->leftJoin('companies', 'work_orders.openid', '=', 'companies.openid')
+                ->offset($offset)->orderByDesc("work_orders.created_at")
+                ->get([
+                    "work_orders.id", "company_id" , "companies.name as company_name", "companies.avatar as company_avatar",
+                    "type", "content", "place", "salary", "education", "dateline", "service_charge", "description", "collection_count",
+                ])
+                ->toArray();
+        }
         $workOrderList = $this->_isCollection($workerId, $workOrderList);
         $message['workOrderList'] = $workOrderList;
         $message['total']    = $workOrderSum;
@@ -73,12 +89,11 @@ class WorkOrderController extends Controller
 
     public function getMeList(Request $request)
     {
-        if (!$request->route('cid')) {
+        if (!$request->route('id')) {
             return msg(3 , __LINE__);
         }
         $workOrder   = WorkOrder::query()
-            ->leftJoin('companies', 'work_orders.company_id', '=', 'companies.id')
-            ->where('company_id', $request->route('cid'))->get()->toArray();
+            ->where('openid', $request->route('id'))->get()->toArray();
         return msg(0, $workOrder);
     }
 
