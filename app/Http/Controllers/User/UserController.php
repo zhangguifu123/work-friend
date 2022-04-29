@@ -35,7 +35,9 @@ class UserController extends Controller
         $checkWorker = DB::table('workers')->where('openid', $res['openid'])->first();
         $checkCompany = DB::table('companies')->where('openid', $res['openid'])->first();
         $result = [];
-        print_r($checkWorker);print_r($data);
+        print_r($checkWorker);
+        print_r(1);
+        print_r($data);
         if ($data['type'] == '1' && $checkWorker){
             $result['user'] = $checkWorker;
             $result['type'] = 1;
