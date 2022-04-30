@@ -62,7 +62,7 @@ Route::namespace('Api')->group(function (){
     Route::post('/avatar',[AvatarController::class, 'upload']);
     //Banner
     Route::post('/banner/upload',[BannerController::class, 'upload']);
-    Route::post('/banner/list/{page}',[BannerController::class, 'getList']);
+    Route::get('/banner/list/{page}',[BannerController::class, 'getList']);
     //应聘订单
     Route::post('/applicationOrder/add',[ApplicationOrderController::class, 'make']);
     Route::delete('/applicationOrder/{id}',[ApplicationOrderController::class, 'delete']);
