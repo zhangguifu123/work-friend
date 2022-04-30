@@ -71,7 +71,7 @@ class CollectionController extends Controller
         if (!is_array($data)) {
             return $data;
         }
-        $workOrder = WorkOrder::query()->find('work_order_id');
+        $workOrder = WorkOrder::query()->find($data['work_order_id']);
         if (!$workOrder){
             return msg(11, __LINE__);
         }
