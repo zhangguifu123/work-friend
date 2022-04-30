@@ -25,7 +25,7 @@ class CreateWorkOrdersTable extends Migration
             $table->string('dateline');
             $table->string('service_charge');
             $table->string('description');
-            $table->string('collection_count');
+            $table->integer("collection_count")->default(0)->comment("被收藏次数");
 
             $table->timestamps();
         });

@@ -26,7 +26,7 @@ class CreateResumesTable extends Migration
             $table->string('position');
             $table->string('salary');
             $table->string('city');
-            $table->string('collection_count');
+            $table->integer("collection_count")->default(0)->comment("被收藏次数");
 
             $table->string('education_experience');
             $table->string('internship_experience');
