@@ -12,6 +12,7 @@ use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\ImageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,6 +25,8 @@ use App\Http\Controllers\BannerController;
 */
 
 Route::namespace('Api')->group(function (){
+    //图片上传
+    Route::post('/image', [ImageController::class, 'upload']);
     Route::post('/manager/login',[ManagerController::class, 'check']);
     //Collection
     Route::get('/collection/resume/{id}',[CollectionController::class, 'getCompanyCollectionList']);
