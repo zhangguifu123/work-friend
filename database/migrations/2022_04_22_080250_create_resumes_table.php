@@ -28,9 +28,9 @@ class CreateResumesTable extends Migration
             $table->string('city');
             $table->string('collection_count');
 
-
-            $table->json('internship_experience');
-            $table->json('project_experience');
+            $table->string('education_experience');
+            $table->string('internship_experience');
+            $table->string('project_experience');
             $table->string('self_assessment');
             $table->timestamps();
         });

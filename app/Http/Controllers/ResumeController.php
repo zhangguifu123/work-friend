@@ -130,6 +130,7 @@ class ResumeController extends Controller
             "position" => ["string"],
             "city"     => ["string"],
 
+            "education_experience" => ["string"],
             "internship_experience" => ["string"],
             "project_experience"    => ["string"],
             "self_assessment"       => ["string"],
