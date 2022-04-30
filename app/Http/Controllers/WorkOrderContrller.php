@@ -93,10 +93,7 @@ class WorkOrderController extends Controller
         $workOrder   = WorkOrder::query()
             ->leftJoin('workers', 'work_orders.openid', '=', 'workers.openid')
             ->leftJoin('companies', 'work_orders.openid', '=', 'companies.openid')
-            ->find($request->route('id'))->get([
-                "work_orders.id", "work_orders.openid" , "workers.name as worker_name", "workers.avatar as worker_avatar",
-                "user_type", "order_type", "companies.name as company_name", "companies.avatar as company_avatar", "content", "place", "salary", "education", "dateline", "service_charge", "description", "collection_count",
-            ]);
+            ->find($request->route('id'));
         return msg(0, $workOrder);
     }
 
