@@ -13,6 +13,7 @@ class BannerController extends Controller
             return msg(3 , __LINE__);
         }
         $banner   = new Banner(['image' => $request->input('image')]);
+        $banner->save();
         return msg(0, $banner);
     }
 
