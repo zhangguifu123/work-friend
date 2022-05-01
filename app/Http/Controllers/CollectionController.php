@@ -92,6 +92,7 @@ class CollectionController extends Controller
         $worker   = WorkerOrderCollection::query()->where('worker_id', $request->route('id'))->get()->toArray();
         $workerOrderIds = [];
         foreach ($worker as $value){
+            print_r($value);
             $workerOrderIds[] = $value['worker_order_id'];
         }
         $workOrderList = WorkOrder::query()->whereIn('id',$workerOrderIds)->get()->toArray();
