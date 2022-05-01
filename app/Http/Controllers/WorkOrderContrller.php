@@ -61,7 +61,7 @@ class WorkOrderController extends Controller
         $workOrderCollection = WorkerOrderCollection::query()->where('worker_id', $workerId)->get()->toArray();
         $collectionArray  = [];
         foreach ($workOrderCollection as $value){
-            $collectionArray[] = $value['resume_id'];
+            $collectionArray[] = $value['work_order_id'];
         }
         $newWorkOrderList = [];
         foreach ($resumeList as $resume){
