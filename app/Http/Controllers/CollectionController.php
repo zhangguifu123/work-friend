@@ -93,7 +93,7 @@ class CollectionController extends Controller
         $workerOrderIds = [];
         foreach ($worker as $value){
             print_r($value);
-            $workerOrderIds[] = $value['worker_order_id'];
+            $workerOrderIds[] = $value['work_order_id'];
         }
         $workOrderList = WorkOrder::query()->whereIn('id',$workerOrderIds)->get()->toArray();
         return msg(0, $workOrderList);
