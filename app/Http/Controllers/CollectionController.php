@@ -94,7 +94,7 @@ class CollectionController extends Controller
         foreach ($worker as $value){
             $workerOrderIds[] = $value['work_order_id'];
         }
-        $workOrderList = WorkOrder::query()->whereIn('work_order.id',$workerOrderIds)
+        $workOrderList = WorkOrder::query()->whereIn('work_orders.id',$workerOrderIds)
             ->leftJoin('workers', 'work_orders.openid', '=', 'workers.openid')
             ->leftJoin('companies', 'work_orders.openid', '=', 'companies.openid')
             ->orderByDesc("work_orders.created_at")
