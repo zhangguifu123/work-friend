@@ -41,10 +41,10 @@ class ResumeController extends Controller
     /** 拉取列表信息 */
     public function getList(Request $request)
     {
-        if (!$request->route('companyId')){
+        if (!$request->input('companyId')){
             return msg(11, __LINE__);
         }
-        $companyId = $request->route('companyId');
+        $companyId = $request->input('companyId');
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
