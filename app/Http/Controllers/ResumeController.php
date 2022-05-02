@@ -72,7 +72,7 @@ class ResumeController extends Controller
         }
         $newResumeList = [];
         foreach ($resumeList as $resume){
-            if (array_search($resume['id'], $collectionArray)) {
+            if (in_array($resume['id'], $collectionArray)) {
                 $resume += ['isCollection' => 1];
             } else {
                 $resume += ['isCollection' => 0];
