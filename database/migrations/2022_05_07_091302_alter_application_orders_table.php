@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterResumesTable extends Migration
+class AlterApplicationOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AlterResumesTable extends Migration
     public function up()
     {
         //
-        Schema::table('resumes', function (Blueprint $table) {
-            $table->string('worker_id');
+        Schema::table('application_orders', function (Blueprint $table) {
+            $table->string('publisher_type');
         });
     }
 
