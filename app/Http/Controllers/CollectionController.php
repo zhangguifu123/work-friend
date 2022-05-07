@@ -25,7 +25,7 @@ class CollectionController extends Controller
         $resumeCollection = new ResumeCollection($data);
         if ($resumeCollection->save()) {
             $resume->increment('collection_count');
-            return msg(0,$resumeCollection->id);
+            return msg(0,['collectionId' => $resumeCollection->id]);
         }
         //未知错误
         return msg(4, __LINE__);
@@ -78,7 +78,7 @@ class CollectionController extends Controller
         $workOrderCollection = new WorkerOrderCollection($data);
         if ($workOrderCollection->save()) {
             $workOrder->increment('collection_count');
-            return msg(0,$workOrderCollection->id);
+            return msg(0,['collectionId' => $workOrderCollection->id]);
         }
         //未知错误
         return msg(4, __LINE__);
