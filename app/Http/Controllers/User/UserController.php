@@ -183,6 +183,7 @@ class UserController extends Controller
             "incorporation"      => ["string"],
             "introduce"      => ["string"],
         ];
+        print_r($request->input());die();
         //是否缺失参数
         if (!$request->has(array_keys($mod))){
             return msg(1,__LINE__);
