@@ -18,7 +18,7 @@ class ApplicationOrderController extends Controller
         if (!is_array($data)) {
             return $data;
         }
-        $data['status'] = 0;
+        $data['status'] = 2;
         $applicationOrder = new ApplicationOrder($data);
         if ($applicationOrder->save()) {
             return msg(0,$applicationOrder->id);
@@ -82,8 +82,8 @@ class ApplicationOrderController extends Controller
     private function _dataHandle(Request $request){
         //声明理想数据格式
         $mod = [
-            "work_order_id"   => ["string"],
-            "worker_id"       => ["string"],
+            "work_order_id"   => ["integer"],
+            "worker_id"       => ["integer"],
             "publisher"       => ["string"],
             "recipient"       => ["string"],
         ];
