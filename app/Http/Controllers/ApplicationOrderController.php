@@ -57,7 +57,7 @@ class ApplicationOrderController extends Controller
             return msg(3 , __LINE__);
         }
         $pid = $request->route('pid');
-        $myApplicationOrder   = ApplicationOrder::query()->where('worker_id', $pid)
+        $myApplicationOrder   = ApplicationOrder::query()->where('publisher', $pid)
             ->leftJoin('workers', 'workers.id', '=', 'application_orders.worker_id')
             ->get()->toArray();
         return msg(0, $myApplicationOrder);
