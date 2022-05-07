@@ -42,7 +42,7 @@ class CollectionController extends Controller
                 $join->on('resumes.id', '=', 'resume_collections.resume_id');
             })
             ->get([
-                "resume_collections.id as collectionId", "resumes.openid", "avatar", "resumes.name", "sex", "age", "education" ,"phone","salary", "position", "posts.created_at", "city", "education_experience", "internship_experience", "project_experience", "self_assessment"
+                "resume_collections.id as collectionId", "resumes.openid", "avatar", "resumes.name", "sex", "age", "education" ,"phone","salary", "position", "resumes.created_at", "city", "education_experience", "internship_experience", "project_experience", "self_assessment"
             ])
             ->toArray();
         return msg(0, $resumeList);
