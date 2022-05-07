@@ -19,6 +19,13 @@ class ApplicationOrderController extends Controller
             return $data;
         }
         $data['status'] = 2;
+        $check = ApplicationOrder::query()->where([
+            ['work_order_id', $data['work_order_id']],
+            ['worker_id',     $data['worker_id']],
+        ])->first();
+        if ($check){
+            return msg(8 , __LINE__);
+        }
         $applicationOrder = new ApplicationOrder($data);
         if ($applicationOrder->save()) {
             return msg(0,$applicationOrder->id);
