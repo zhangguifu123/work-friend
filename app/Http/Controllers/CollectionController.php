@@ -93,7 +93,7 @@ class CollectionController extends Controller
             return msg(3 , __LINE__);
         }
         $wid = $request->route('id');
-        $workOrderList   = WorkerOrderCollection::query()->where('uid', $wid)
+        $workOrderList   = WorkerOrderCollection::query()->where('worker_id', $wid)
             ->leftJoin('work_orders', function ($join) use ($wid) {
                 $join->on('work_orders.id', '=', 'worker_order_collections.work_order_id');
             })
