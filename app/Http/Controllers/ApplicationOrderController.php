@@ -43,8 +43,8 @@ class ApplicationOrderController extends Controller
             ->leftJoin('workers', 'workers.id', '=', 'application_orders.publisher')
             ->leftJoin('work_orders', 'work_orders.id', '=', 'application_orders.work_order_id')
             ->get([
-                'companies.name as company_name', 'companies.id as company_id', 'companies.avatar as company_avatar',
-                'workers.name as worker_name', 'workers.id as worker_id', 'workers.avatar as worker_avatar',
+                'companies.name as publisher_company_name', 'companies.id as publisher_company_id', 'companies.avatar as publisher_company_avatar',
+                'workers.name as publisher_worker_name', 'workers.id as publisher_worker_id', 'workers.avatar as publisher_worker_avatar',
                 'publisher_type', 'application_orders.status as application_order_status', 'work_orders.status as work_order_status',
                 'application_orders.work_order_id', 'application_orders.worker_id', 'application_orders.publisher', 'application_orders.recipient',
             ])->toArray();
