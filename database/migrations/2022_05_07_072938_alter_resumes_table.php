@@ -17,6 +17,12 @@ class AlterResumesTable extends Migration
         Schema::table('resumes', function (Blueprint $table) {
             $table->string('worker_id');
         });
+        Schema::table('work_orders', function (Blueprint $table) {
+            $table->string('status')->default("2");
+        });
+        Schema::table('application_orders', function (Blueprint $table) {
+            $table->string('publisher_type');
+        });
     }
 
     /**

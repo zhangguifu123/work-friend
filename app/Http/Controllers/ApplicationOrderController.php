@@ -39,26 +39,26 @@ class ApplicationOrderController extends Controller
         }
         $uid = $request->route('uid');
         $myApplicationOrder   = ApplicationOrder::query()->where('worker_id', $uid)
-            ->leftJoin('workers', 'workers.id', '=', 'application_orders.worker_id')
-            ->get()->toArray();
+            ->leftJoin('companies', 'companies.id', '=', 'application_orders.publisher')
+            ->leftJoin('workers', 'workers.id', '=', 'application_orders.publisher')
+            ->leftJoin('work_orders', 'work_orders.id', '=', 'application_orders.work_order_id')
+            ->get([
+                'companies.name as company_name', 'companies.id as company_id', 'companies.avatar as company_avatar',
+                'workers.name as worker_name', 'workers.id as worker_id', 'workers.avatar as worker_avatar',
+                'publisher_type', 'application_orders.status as application_order_status', 'work_orders.status as work_order_status',
+                'application_orders.work_order_id', 'application_orders.worker_id', 'application_orders.publisher_id', 'application_orders.recipient',
+            ])->toArray();
         return msg(0, $myApplicationOrder);
     }
 
     public function getPublisherList(Request $request){
-        if (!$request->route('pid') || !!$request->input('publisher_type')) {
+        if (!$request->route('pid')) {
             return msg(3 , __LINE__);
         }
-        $publisherType = $request->input('publisher_type');
         $pid = $request->route('pid');
-        if ($publisherType == 2) {
-            $myApplicationOrder   = ApplicationOrder::query()->where('publisher', $pid)
-                ->leftJoin('companies', 'companies.id', '=', 'application_orders.publisher_id')
-                ->get()->toArray();
-        } else {
-            $myApplicationOrder   = ApplicationOrder::query()->where('worker_id', $pid)
-                ->leftJoin('workers', 'workers.id', '=', 'application_orders.worker_id')
-                ->get()->toArray();
-        }
+        $myApplicationOrder   = ApplicationOrder::query()->where('worker_id', $pid)
+            ->leftJoin('workers', 'workers.id', '=', 'application_orders.worker_id')
+            ->get()->toArray();
         return msg(0, $myApplicationOrder);
     }
 
@@ -103,6 +103,7 @@ class ApplicationOrderController extends Controller
             "work_order_id"   => ["integer"],
             "worker_id"       => ["integer"],
             "publisher_id"    => ["integer"],
+            "publisher_type"  => ["integer"],
             "recipient"       => ["string"],
         ];
         //是否缺失参数
