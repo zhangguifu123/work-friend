@@ -36,12 +36,15 @@ class CollectionController extends Controller
         if (!$request->route('id')) {
             return msg(3 , __LINE__);
         }
-        $resume   = resumeCollection::query()->where('company_id', $request->route('id'))->get()->toArray();
-        $resumeIds = [];
-        foreach ($resume as $value){
-            $resumeIds[] = $value['resume_id'];
-        }
-        $resumeList = Resume::query()->whereIn('id',$resumeIds)->get()->toArray();
+        $cid = $request->route('id');
+        $resumeList   = ResumeCollection::query()->where('uid', $cid)
+            ->leftJoin('resumes', function ($join) use ($cid) {
+                $join->on('resumes.id', '=', 'resume_collections.resume_id');
+            })
+            ->get([
+                "resume_collections.id as collectionId", "resumes.openid", "avatar", "resumes.name", "sex", "age", "education" ,"phone","salary", "position", "posts.created_at", "city", "education_experience", "internship_experience", "project_experience", "self_assessment"
+            ])
+            ->toArray();
         return msg(0, $resumeList);
     }
 
@@ -89,17 +92,16 @@ class CollectionController extends Controller
         if (!$request->route('id')) {
             return msg(3 , __LINE__);
         }
-        $worker   = WorkerOrderCollection::query()->where('worker_id', $request->route('id'))->get()->toArray();
-        $workerOrderIds = [];
-        foreach ($worker as $value){
-            $workerOrderIds[] = $value['work_order_id'];
-        }
-        $workOrderList = WorkOrder::query()->whereIn('work_orders.id',$workerOrderIds)
+        $wid = $request->route('id');
+        $workOrderList   = WorkerOrderCollection::query()->where('uid', $wid)
+            ->leftJoin('work_orders', function ($join) use ($wid) {
+                $join->on('worker_orders.id', '=', 'worker_order_collections.worker_order_id');
+            })
             ->leftJoin('workers', 'work_orders.openid', '=', 'workers.openid')
             ->leftJoin('companies', 'work_orders.openid', '=', 'companies.openid')
             ->orderByDesc("work_orders.created_at")
             ->get([
-                "companies.id as company_id", "workers.id as worker_id", "work_orders.id", "work_orders.openid" , "workers.name as worker_name", "workers.avatar as worker_avatar",
+                "worker_order_collections.id as collectionId", "companies.id as company_id", "workers.id as worker_id", "work_orders.id", "work_orders.openid" , "workers.name as worker_name", "workers.avatar as worker_avatar",
                 "user_type", "order_type", "companies.name as company_name", "companies.avatar as company_avatar", "content", "place", "salary", "education", "dateline", "service_charge", "description", "collection_count",
             ])
             ->toArray();
