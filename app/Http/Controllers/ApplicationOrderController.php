@@ -19,6 +19,7 @@ class ApplicationOrderController extends Controller
             return $data;
         }
         $data['status'] = 2;
+        $data['publisher'] = $data['publisher_id'];
         $check = ApplicationOrder::query()->where([
             ['work_order_id', $data['work_order_id']],
             ['worker_id',     $data['worker_id']],
@@ -47,7 +48,7 @@ class ApplicationOrderController extends Controller
         if (!$request->route('pid')) {
             return msg(3 , __LINE__);
         }
-        $myApplicationOrder   = ApplicationOrder::query()->where('worker_id', $request->route('pid'))->get()->toArray();
+        $myApplicationOrder   = ApplicationOrder::query()->where('publisher', $request->route('pid'))->get()->toArray();
         return msg(0, $myApplicationOrder);
     }
 
@@ -91,7 +92,7 @@ class ApplicationOrderController extends Controller
         $mod = [
             "work_order_id"   => ["integer"],
             "worker_id"       => ["integer"],
-            "publisher"       => ["string"],
+            "publisher_id"    => ["string"],
             "recipient"       => ["string"],
         ];
         //是否缺失参数
