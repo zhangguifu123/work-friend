@@ -37,7 +37,7 @@ class CollectionController extends Controller
             return msg(3 , __LINE__);
         }
         $cid = $request->route('id');
-        $resumeList   = ResumeCollection::query()->where('uid', $cid)
+        $resumeList   = ResumeCollection::query()->where('company_id', $cid)
             ->leftJoin('resumes', function ($join) use ($cid) {
                 $join->on('resumes.id', '=', 'resume_collections.resume_id');
             })
