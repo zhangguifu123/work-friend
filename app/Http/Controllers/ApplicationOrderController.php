@@ -46,7 +46,7 @@ class ApplicationOrderController extends Controller
                 'companies.name as company_name', 'companies.id as company_id', 'companies.avatar as company_avatar',
                 'workers.name as worker_name', 'workers.id as worker_id', 'workers.avatar as worker_avatar',
                 'publisher_type', 'application_orders.status as application_order_status', 'work_orders.status as work_order_status',
-                'application_orders.work_order_id', 'application_orders.worker_id', 'application_orders.publisher_id', 'application_orders.recipient',
+                'application_orders.work_order_id', 'application_orders.worker_id', 'application_orders.publisher', 'application_orders.recipient',
             ])->toArray();
         return msg(0, $myApplicationOrder);
     }
