@@ -65,7 +65,7 @@ class WorkOrderController extends Controller
         }
         $newWorkOrderList = [];
         foreach ($resumeList as $resume){
-            if (in_array($resume['id'], $collectionArray)) {
+            if (array_key_exists($resume['id'], $collectionArray)) {
                 $resume += ['isCollection' => 1, 'collectionId' => $collectionArray[$resume['id']]];
             } else {
                 $resume += ['isCollection' => 0];
