@@ -61,12 +61,12 @@ class WorkOrderController extends Controller
         $workOrderCollection = WorkerOrderCollection::query()->where('worker_id', $workerId)->get()->toArray();
         $collectionArray  = [];
         foreach ($workOrderCollection as $value){
-            $collectionArray[] = $value['work_order_id'];
+            $collectionArray[$value['work_order_id']] = $value['id'];
         }
         $newWorkOrderList = [];
         foreach ($resumeList as $resume){
             if (in_array($resume['id'], $collectionArray)) {
-                $resume += ['isCollection' => 1];
+                $resume += ['isCollection' => 1, 'collectionId' => $collectionArray[$resume['id']]];
             } else {
                 $resume += ['isCollection' => 0];
             };
