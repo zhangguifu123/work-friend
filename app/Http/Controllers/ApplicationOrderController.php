@@ -47,7 +47,7 @@ class ApplicationOrderController extends Controller
         if (!$request->route('pid')) {
             return msg(3 , __LINE__);
         }
-        $myApplicationOrder   = ApplicationOrder::query()->where('publisher', $request->route('id'))->get()->toArray();
+        $myApplicationOrder   = ApplicationOrder::query()->where('worker_id', $request->route('id'))->get()->toArray();
         return msg(0, $myApplicationOrder);
     }
 
