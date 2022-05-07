@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ApplicationOrder;
-use App\Models\User;
-use App\Models\WorkOrder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 
 class ApplicationOrderController extends Controller
@@ -40,15 +37,28 @@ class ApplicationOrderController extends Controller
         if (!$request->route('uid')) {
             return msg(3 , __LINE__);
         }
-        $myApplicationOrder   = ApplicationOrder::query()->where('worker_id', $request->route('uid'))->get()->toArray();
+        $uid = $request->route('uid');
+        $myApplicationOrder   = ApplicationOrder::query()->where('worker_id', $uid)
+            ->leftJoin('workers', 'workers.id', '=', 'application_orders.worker_id')
+            ->get()->toArray();
         return msg(0, $myApplicationOrder);
     }
 
     public function getPublisherList(Request $request){
-        if (!$request->route('pid')) {
+        if (!$request->route('pid') || !!$request->input('publisher_type')) {
             return msg(3 , __LINE__);
         }
-        $myApplicationOrder   = ApplicationOrder::query()->where('publisher', $request->route('pid'))->get()->toArray();
+        $publisherType = $request->input('publisher_type');
+        $pid = $request->route('pid');
+        if ($publisherType == 2) {
+            $myApplicationOrder   = ApplicationOrder::query()->where('publisher', $pid)
+                ->leftJoin('companies', 'companies.id', '=', 'application_orders.publisher_id')
+                ->get()->toArray();
+        } else {
+            $myApplicationOrder   = ApplicationOrder::query()->where('worker_id', $pid)
+                ->leftJoin('workers', 'workers.id', '=', 'application_orders.worker_id')
+                ->get()->toArray();
+        }
         return msg(0, $myApplicationOrder);
     }
 
