@@ -102,7 +102,7 @@ class ApplicationOrderController extends Controller
         $mod = [
             "work_order_id"   => ["integer"],
             "worker_id"       => ["integer"],
-            "publisher_id"    => ["string"],
+            "publisher_id"    => ["integer"],
             "recipient"       => ["string"],
         ];
         //是否缺失参数
