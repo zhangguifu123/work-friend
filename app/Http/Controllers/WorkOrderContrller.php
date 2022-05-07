@@ -45,6 +45,7 @@ class WorkOrderController extends Controller
             ->get([
                 "companies.id as company_id", "workers.id as worker_id", "work_orders.id", "work_orders.openid" , "workers.name as worker_name", "workers.avatar as worker_avatar",
                 "user_type", "order_type", "companies.name as company_name", "companies.avatar as company_avatar", "content", "place", "salary", "education", "dateline", "service_charge", "description", "collection_count",
+                "work_orders.status",
             ])
             ->toArray();
         $workOrderList = $this->_isCollection($workerId, $workOrderList);
@@ -96,6 +97,7 @@ class WorkOrderController extends Controller
             ->get([
                 "companies.id as company_id", "workers.id as worker_id", "work_orders.id", "work_orders.openid" , "workers.name as worker_name", "workers.avatar as worker_avatar",
                 "user_type", "order_type", "companies.name as company_name", "companies.avatar as company_avatar", "content", "place", "salary", "education", "dateline", "service_charge", "description", "collection_count",
+                "work_orders.status"
             ])
             ->find($request->route('id'));
         return msg(0, $workOrder);
