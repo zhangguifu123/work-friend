@@ -95,7 +95,7 @@ class CollectionController extends Controller
         $wid = $request->route('id');
         $workOrderList   = WorkerOrderCollection::query()->where('uid', $wid)
             ->leftJoin('work_orders', function ($join) use ($wid) {
-                $join->on('worker_orders.id', '=', 'worker_order_collections.work_order_id');
+                $join->on('work_orders.id', '=', 'worker_order_collections.work_order_id');
             })
             ->leftJoin('workers', 'work_orders.openid', '=', 'workers.openid')
             ->leftJoin('companies', 'work_orders.openid', '=', 'companies.openid')
