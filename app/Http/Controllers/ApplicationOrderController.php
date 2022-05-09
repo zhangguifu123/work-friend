@@ -46,7 +46,7 @@ class ApplicationOrderController extends Controller
                 'companies.name as publisher_company_name', 'companies.id as publisher_company_id', 'companies.avatar as publisher_company_avatar',
                 'workers.name as publisher_worker_name', 'workers.id as publisher_worker_id', 'workers.avatar as publisher_worker_avatar',
                 'work_orders.content', 'work_orders.order_type as work_order_type', 'work_orders.salary',
-                'publisher_type', 'application_orders.status as application_order_status', 'work_orders.status as work_order_status',
+                'application_orders.id as id', 'publisher_type', 'application_orders.status as application_order_status', 'work_orders.status as work_order_status',
                 'application_orders.work_order_id', 'application_orders.worker_id', 'application_orders.publisher', 'application_orders.recipient',
             ])->toArray();
         return msg(0, $myApplicationOrder);
@@ -73,7 +73,7 @@ class ApplicationOrderController extends Controller
             ->get([
                 'workers.name as worker_name', 'workers.id as worker_id', 'workers.avatar as worker_avatar',
                 'work_orders.content', 'work_orders.order_type as work_order_type', 'work_orders.salary',
-                'publisher_type', 'application_orders.status as application_order_status', 'work_orders.status as work_order_status',
+                'application_orders.id as id', 'publisher_type', 'application_orders.status as application_order_status', 'work_orders.status as work_order_status',
                 'application_orders.work_order_id', 'application_orders.worker_id', 'application_orders.publisher', 'application_orders.recipient',
             ])->toArray();
         return msg(0, $myApplicationOrder);
