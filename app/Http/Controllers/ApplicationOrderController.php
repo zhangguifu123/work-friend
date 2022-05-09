@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ApplicationOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use function PHPUnit\Framework\isEmpty;
 
 class ApplicationOrderController extends Controller
 {
@@ -93,7 +94,7 @@ class ApplicationOrderController extends Controller
     /** 修改 */
     public function update(Request $request)
     {
-        if (!$request->input('status') || !$request->route('id')) {
+        if (isEmpty($request->input('status'))|| !$request->route('id')) {
             return msg(1, __LINE__);
         }
         //修改
