@@ -80,6 +80,27 @@ class UserController extends Controller
         return msg(0, $User);
 
     }
+    public function updateScore(Request $request) {
+        if (is_null($request->input('score')) || !$request->route('openid') || !$request->input('type')){
+            return msg(1, __LINE__);
+        }
+        $score  = $request->input('score');
+        $openid = $request->route('openid');
+        $type   = $request->input('type');
+        if ($type == "1"){
+            $model = Worker::query();
+        }
+        if ($type == "2"){
+            $model = Company::query();
+        }
+        $user = $model->where('openid', $openid)->first();
+        if (!$user) {
+            return msg(11, __LINE__);
+        }
+        $user->credit_score = $score;
+        $user->save();
+        return msg(0, $user);
+    }
     public function updateStatus(Request $request){
         if (!$request->input('status') || !$request->input('type') || !$request->route('id')) {
             return msg(1, __LINE__);
