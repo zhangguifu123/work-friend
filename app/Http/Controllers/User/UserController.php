@@ -105,7 +105,7 @@ class UserController extends Controller
             $model = Company::query();
         }
         $user = $model->where('openid', $openid)->first();
-
+        print_r($data);die();
         if ($user->update($data)) {
             return msg(0, $user);
         }
