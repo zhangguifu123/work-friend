@@ -125,7 +125,8 @@ class WorkOrderController extends Controller
             return $data;
         }
         //修改
-        $workOrder = WorkOrder::query()->where('id',$request->route('id'));
+        $data['status'] = "0";
+        $workOrder = WorkOrder::query()->find($request->route('id'));
         $workOrder->update($data);
         if ($workOrder) {
             return msg(0, __LINE__);
