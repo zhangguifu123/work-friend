@@ -57,7 +57,7 @@ Route::namespace('Api')->group(function (){
     Route::get('/worker/{id}',[UserController::class, 'getOneWorker']);
     Route::get('/company/{id}',[UserController::class, 'getOneCompany']);
     Route::put('/{id}/update',[UserController::class, 'updateStatus']);
-    Route::put('/{openid}/updateScore',[UserController::class, 'updateScore']);
+    Route::put('/{id}/updateScore',[UserController::class, 'updateScore']);
     Route::post('/check',[UserController::class, 'check']);
     Route::post('/authenticate',[UserController::class, 'authenticate']);
     Route::post('/avatar',[AvatarController::class, 'upload']);

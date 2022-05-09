@@ -81,11 +81,11 @@ class UserController extends Controller
 
     }
     public function updateScore(Request $request) {
-        if (is_null($request->input('score')) || !$request->route('openid') || !$request->input('type')){
+        if (is_null($request->input('score')) || !$request->route('id') || !$request->input('type')){
             return msg(1, __LINE__);
         }
         $score  = $request->input('score');
-        $openid = $request->route('openid');
+        $openid = $request->route('id');
         $type   = $request->input('type');
         if ($type == "1"){
             $model = Worker::query();
