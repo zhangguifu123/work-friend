@@ -125,7 +125,6 @@ class WorkOrderController extends Controller
             return $data;
         }
         //修改
-        $data['status'] = "0";
         $workOrder = WorkOrder::query()->find($request->route('id'));
         $workOrder->update($data);
         if ($workOrder) {
@@ -148,6 +147,7 @@ class WorkOrderController extends Controller
             "dateline"     => ["string"],
             "description"  => ["string", "nullable"],
             "service_charge" => ["string"],
+            "status"       => ["integer"],
         ];
         //是否缺失参数
         if (!$request->has(array_keys($mod))){
