@@ -93,11 +93,11 @@ class ApplicationOrderController extends Controller
     /** 修改 */
     public function update(Request $request)
     {
-        if (!$request->input('status') || !$request->route('id')) {
+        if (!$request->input('status') || !$request->input('id')) {
             return msg(1, __LINE__);
         }
         //修改
-        $applicationOrder = ApplicationOrder::query()->find($request->route('id'));
+        $applicationOrder = ApplicationOrder::query()->find($request->input('id'));
         if (!$applicationOrder) {
             return msg(4, __LINE__);
         }
