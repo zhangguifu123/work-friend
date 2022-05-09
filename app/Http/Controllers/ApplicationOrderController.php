@@ -94,9 +94,7 @@ class ApplicationOrderController extends Controller
     /** 修改 */
     public function update(Request $request)
     {
-        print_r(empty($request->input('status')));
-        print_r($request->input('status'));die();
-        if (isEmpty($request->input('status'))|| !$request->route('id')) {
+        if (is_null($request->input('status'))|| !$request->route('id')) {
             return msg(1, __LINE__);
         }
         //修改
