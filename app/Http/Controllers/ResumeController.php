@@ -125,7 +125,7 @@ class ResumeController extends Controller
             "phone"    => ["string"],
             "education"=> ["string"],
             "avatar"   => ["string"],
-            "worker_id"=> ["string"],
+            "worker_id"=> ["integer"],
 
             "salary"   => ["string"],
             "position" => ["string"],
