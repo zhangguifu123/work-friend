@@ -126,7 +126,7 @@ class WorkOrderController extends Controller
         }
         //修改
         $workOrder = WorkOrder::query()->find($request->route('id'));
-        $workOrder = $workOrder->update($data);
+        $workOrder->update($data);
         if ($workOrder) {
             return msg(0, __LINE__);
         }
