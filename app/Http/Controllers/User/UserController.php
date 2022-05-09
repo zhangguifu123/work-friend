@@ -106,7 +106,6 @@ class UserController extends Controller
         }
         $user = $model->where('openid', $openid)->first();
         if ($user->update($data)) {
-            print_r($user);
             return msg(0, $user);
         }
         return msg(4, __LINE__);
