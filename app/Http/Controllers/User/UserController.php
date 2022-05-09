@@ -93,7 +93,7 @@ class UserController extends Controller
         if ($type == "2"){
             $model = Company::query();
         }
-        $user = $model->where('openid', $openid)->first();
+        $user = $model->query()->where('openid', $openid)->first();
         if (!$user) {
             return msg(11, __LINE__);
         }
