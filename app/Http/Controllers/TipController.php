@@ -97,8 +97,9 @@ class TipController extends Controller
             "reporter"      => ["string", "max:20"],
             "worker_order_id"=> ["string"],
             "company_id"    => ["string"],
+            "type"          => ["integer"],
             "content"       => ["string"],
-            "status"       => ["string", "nullable"],
+            "status"        => ["string", "nullable"],
         ];
         //是否缺失参数
         if (!$request->has(array_keys($mod))){
