@@ -21,7 +21,9 @@ class StatisticController extends Controller
             $companyCount[] = $value->openid;
         }
         $userCount = array_merge($companyCount, $workerCount);
+        print_r($userCount);
         $userCount = array_unique($userCount);
+
         print_r($userCount);
 
     }
