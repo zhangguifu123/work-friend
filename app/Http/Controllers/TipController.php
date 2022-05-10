@@ -30,10 +30,10 @@ class TipController extends Controller
         if (!$request->route('id')) {
             return msg(3 , __LINE__);
         }
-        $worker   = Tip::query()->where(
+        $worker   = Tip::query()->where([
             ['reporter', $request->route('id')],
             ['type', $request->input('type')]
-        )->get()->toArray();
+        ])->get()->toArray();
         return msg(0, $worker);
     }
 
