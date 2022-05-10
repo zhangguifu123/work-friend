@@ -53,11 +53,22 @@ class WorkOrderController extends Controller
                 "work_orders.status",
             ])
             ->toArray();
+        $newWorkOrderList = [];
         if (!is_null($data['salary'])) {
-            foreach ( $workOrderList as $workOrder ) {
-                $salary = json_decode($workOrder['salary'], true);
-                print_r($salary);
+            if ($data['type'] == 'partTime'){
+                foreach ( $workOrderList as $workOrder ) {
+                    if ( $data['salary']['max'] >= $workOrder['salary'] && $data['salary']['min'] <= $workOrder['salary'] ) {
+                        $newWorkOrderList[] = $workOrder;
+                    }
+                }
+            } else {
+                foreach ( $workOrderList as $workOrder ) {
+                    if ( $data['salary']['max'] >= $workOrder['salary']['max'] && $data['salary']['min'] <= $workOrder['salary']['min'] ) {
+                        $newWorkOrderList[] = $workOrder;
+                    }
+                }
             }
+
             die();
         }
         $workOrderList = $this->_isCollection($workerId, $workOrderList);
