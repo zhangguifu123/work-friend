@@ -2,8 +2,25 @@
 use App\Models\Company;
 use App\Models\Worker;
 use Illuminate\Http\Request;
-function handleUid(Request $request) {
-
+/**
+ * request数据检查
+ * @param $request
+ * @param $params
+ * @return string
+ */
+function handleData(Request $request,$params)
+{
+    //检查参数
+    if(!$request->has(array_keys($params))){
+        return msg(1, '缺失参数');
+    }
+    //提取数据
+    $data = $request->only(array_keys($params));
+    //检查数据
+    if(Validator::make($data,$params)->fails()){
+        return msg(3, '非法参数');
+    }
+    return $request;
 }
 
 function msg($code, $msg) {

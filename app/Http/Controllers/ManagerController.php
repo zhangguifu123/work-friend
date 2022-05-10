@@ -41,17 +41,19 @@ class ManagerController extends Controller
         ]);
     }
     public function add (Request $request ) {
-        $data = $this->_dataHandle($request);
-        if (!is_array($data)){
-            return $data;
-        };
-        $mod = array(
+        $params = array(
             'phone'    => ['regex:/^[^\s]{8,20}$/'],
             'password' => ['regex:/^[^\s]{8,20}$/'],
             'department' => ['string'],
             'level' => ['string'],
             'name' => ['string'],
         );
+        $requestTest = handleData($request,$params);
+        if(!is_object($requestTest)){
+            return $requestTest;
+        }
+        //提取数据
+        $data = $request->only(array_keys($params));
         $isManager = $request->header('Authorization');
         $Authorization    = substr($isManager, 7);
         $level  = Manager::query()->where('api_token', $Authorization)->first();
