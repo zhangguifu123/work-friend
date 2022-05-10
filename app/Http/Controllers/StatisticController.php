@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApplicationOrder;
 use App\Models\Company;
 use App\Models\Worker;
+use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 
 class StatisticController extends Controller
 {
     //
     public function statistic (Request $request) {
+        //userCount
         $worker  = Worker::all();
         $workerCount = [];
         foreach ($worker as $value) {
@@ -21,10 +24,14 @@ class StatisticController extends Controller
             $companyCount[] = $value->openid;
         }
         $userCount = array_merge($companyCount, $workerCount);
-        print_r($userCount);
         $userCount = array_unique($userCount);
-
-        print_r($userCount);
-
+        //orderCount
+        $orderCount = ApplicationOrder::query()->where('status', 1)->count();
+        //income
+        $incomeCount = WorkOrder::query()->leftJoin('application_orders', function ($join) {
+           $join->on('application_orders.work_order_id', '=', 'worker_orders.id')
+                ->on('application_orders.status', '=', 1);
+        })->sum('service_charge');
+        print_r($incomeCount);
     }
 }
