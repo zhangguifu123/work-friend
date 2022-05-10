@@ -24,7 +24,7 @@ class StatisticController extends Controller
             $companyCount[] = $value->openid;
         }
         $userCount = array_merge($companyCount, $workerCount);
-        $userCount = array_unique($userCount);
+        $userCount = sizeof(array_unique($userCount)) ;
         //orderCount
         $orderCount = ApplicationOrder::query()->where('status', 1)->count();
         //income
