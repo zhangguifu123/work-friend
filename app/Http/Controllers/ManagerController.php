@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 
 class ManagerController extends Controller
 {
-    //
     /**
      * 更新已经验证过的用户的 API 令牌。
      *
@@ -41,6 +40,31 @@ class ManagerController extends Controller
             'api_token' => Str::random(60),
         ]);
     }
+    public function add (Request $request ) {
+        $data = $this->_dataHandle($request);
+        if (!is_array($data)){
+            return $data;
+        };
+        $mod = array(
+            'phone'    => ['regex:/^[^\s]{8,20}$/'],
+            'password' => ['regex:/^[^\s]{8,20}$/'],
+            'department' => ['string'],
+            'level' => ['string'],
+            'name' => ['string'],
+        );
+        $isManager = $request->header('Authorization');
+        $Authorization    = substr($isManager, 7);
+        $level  = Manager::query()->where('api_token', $Authorization)->first();
+        if (!$level) {
+            return msg(13, __LINE__);
+        }
+        $level  = $level->level;
+        if ($level != 0 ) {
+            return msg(10, __LINE__);
+        }
+        $manager = $this->create($data);
+        return msg(0, $manager);
+    }
 
     public function check(Request $request){
         $data = $this->_dataHandle($request);
@@ -64,6 +88,39 @@ class ManagerController extends Controller
     }
 
 
+    //删除管理员
+    public function delete(Request $request)
+    {
+        $manager = Manager::query()->find($request->route("id"));
+        if (!$manager) {
+            return msg(3, "目标不存在" . __LINE__);
+        } else if($manager->level <= session("level")) {
+            return msg(3, "权限不足" .__LINE__);
+        }
+        $result = $manager->delete();
+        if ($result) {
+            return msg(0, __LINE__);
+        } else {
+            return msg(4, __LINE__);
+        }
+    }
+    //获取管理员列表
+
+    public function getList()
+    {
+        $manager_list = Manager::query()->get(['id', 'name', 'phone', 'department', 'level'])->toArray();
+        $level = [
+            "0" => "超级管理员",
+            "1" => "普通管理员"
+        ];
+
+        foreach ($manager_list as &$manager) {
+            $manager["level"] = $level[$manager["level"]];
+        }
+        $list_count = Manager::query()->count();
+        $message = ['total'=>$list_count,'list'=>$manager_list];
+        return msg(0, $message);
+    }
 
 
     private function _dataHandle(Request $request){

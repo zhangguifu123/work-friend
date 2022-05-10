@@ -54,6 +54,7 @@ class WorkOrderController extends Controller
             ])
             ->toArray();
         $newWorkOrderList = [];
+        print_r($data['salary']);die();
         if (!is_null($data['salary'])) {
             if ($data['type'] == 'partTime'){
                 foreach ( $workOrderList as $workOrder ) {
