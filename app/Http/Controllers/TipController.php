@@ -94,7 +94,7 @@ class TipController extends Controller
         //声明理想数据格式
         $mod = [
             "img"           => ["json"],
-            "reporter"      => ["string", "max:20"],
+            "reporter"      => ["string"],
             "worker_order_id"=> ["string"],
             "company_id"    => ["string"],
             "type"          => ["integer"],
