@@ -30,9 +30,8 @@ class StatisticController extends Controller
         //income
         $workOrderId = ApplicationOrder::query()->where('application_orders.status', '=', '1')->get('work_order_id')->toArray();
         $workOrderIds = [];
-        print_r($workOrderId);die();
         foreach ($workOrderId as $value){
-            $workOrderIds[] = $value[0];
+            $workOrderIds[] = $value['work_order_id'];
         }
         $incomeCount = WorkOrder::query()->whereIn('id', array_unique($workOrderIds))->sum('service_charge');
         print_r($incomeCount);
