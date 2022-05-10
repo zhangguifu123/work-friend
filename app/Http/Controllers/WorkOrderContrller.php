@@ -17,8 +17,8 @@ class WorkOrderController extends Controller
             return $data;
         }
         $data['collection_count'] = 0;
-        $workOrder = new WorkOrder($data);
         $data['status'] = 2;
+        $workOrder = new WorkOrder($data);
         if ($workOrder->save()) {
             return msg(0,$workOrder->id);
         }
