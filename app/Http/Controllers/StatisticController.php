@@ -31,7 +31,7 @@ class StatisticController extends Controller
         $status = 1;
         $incomeCount = WorkOrder::query()->leftJoin('application_orders', function ($join) use ($status) {
            $join->on('application_orders.work_order_id', '=', 'work_orders.id')
-                ->on('application_orders.status', '=', $status);
+                ->where('application_orders.status', '=', $status);
         })->sum('service_charge');
         print_r($incomeCount);
     }
