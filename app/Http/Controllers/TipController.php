@@ -31,7 +31,7 @@ class TipController extends Controller
             return msg(3 , __LINE__);
         }
         $worker   = Tip::query()->where(
-            ['openid', $request->route('id')],
+            ['reporter', $request->route('id')],
             ['type', $request->input('type')]
         )->get()->toArray();
         return msg(0, $worker);
