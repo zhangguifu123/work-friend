@@ -53,6 +53,7 @@ class WorkOrderController extends Controller
                 "work_orders.status",
             ])
             ->toArray();
+        print_r(is_null($data['salary']));
         if (is_null($data['salary'])) {
             foreach ( $workOrderList as $workOrder ) {
                 $salary = $workOrder;
