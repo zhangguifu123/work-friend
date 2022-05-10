@@ -54,8 +54,7 @@ class WorkOrderController extends Controller
             ])
             ->toArray();
         $newWorkOrderList = [];
-        var_dump(is_null($data['salary']));
-        if (!is_null($data['salary'])) {
+        if (is_array($data['salary'])) {
             if ($data['type'] == 'partTime'){
                 foreach ( $workOrderList as $workOrder ) {
                     if ( $data['salary']['max'] >= $workOrder['salary'] && $data['salary']['min'] <= $workOrder['salary'] ) {
