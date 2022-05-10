@@ -63,8 +63,7 @@ class WorkOrderController extends Controller
                 }
             } else {
                 foreach ( $workOrderList as $workOrder ) {
-                    $workOrder['salary']['max'] = (int)$workOrder['salary']['max'];
-                    $workOrder['salary']['min'] = (int)$workOrder['salary']['min'];
+                    print_r($data['salary']);
                     if ( $data['salary']['max'] >= $workOrder['salary']['max'] && $data['salary']['min'] <= $workOrder['salary']['min'] ) {
                         $newWorkOrderList[] = $workOrder;
                     }
