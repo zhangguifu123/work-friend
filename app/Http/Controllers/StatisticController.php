@@ -9,9 +9,17 @@ use Illuminate\Http\Request;
 class StatisticController extends Controller
 {
     //
-    public function statistic (Request $request ) {
-        $workerCount  = Worker::query()->select('openid');
-        $companyCount = Company::query()->select('openid');
+    public function statistic (Request $request) {
+        $worker  = Worker::all();
+        $workerCount = [];
+        foreach ($worker as $value) {
+            $workerCount[] = $value->openid;
+        }
+        $company = Company::all();
+        $companyCount = [];
+        foreach ($company as $value) {
+            $companyCount[] = $value->openid;
+        }
         print_r($workerCount);
 
     }
