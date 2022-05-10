@@ -30,6 +30,7 @@ class StatisticController extends Controller
         //income
         $workOrderId = ApplicationOrder::query()->where('application_orders.status', '=', '1')->get('work_order_id')->toArray();
         $workOrderIds = [];
+        print_r($workOrderId);die();
         foreach ($workOrderId as $value){
             $workOrderIds[] = $value[0];
         }
