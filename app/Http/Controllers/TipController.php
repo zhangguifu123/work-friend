@@ -79,6 +79,7 @@ class TipController extends Controller
             "user_id"       => ["string"],
             "title"         => ["string", "max:20"],
             "content"       => ["string", "nullable"],
+            "status"       => ["string", "nullable"],
         ];
         //是否缺失参数
         if (!$request->has(array_keys($mod))){

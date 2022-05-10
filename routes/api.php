@@ -14,6 +14,7 @@ use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\AppealController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -49,9 +50,14 @@ Route::namespace('Api')->group(function (){
     Route::post('/notice/add',[NoticeController::class, 'publish']);
     Route::delete('/notice/{id}',[NoticeController::class, 'delete']);
     Route::put('/notice/{id}',[NoticeController::class, 'update']);
+    //申诉Appeal
+    Route::get('/appeal/list/{page}',[AppealController::class, 'getList']);
+    Route::get('/appeal/me/{page}',[AppealController::class, 'getMeList']);
+    Route::post('/appeal/add',[AppealController::class, 'publish']);
+    Route::delete('/appeal/{id}',[AppealController::class, 'delete']);
+    Route::put('/appeal/{id}',[AppealController::class, 'update']);
     //反馈Tip
     Route::get('/tip/list/{page}',[TipController::class, 'getList']);
-    Route::get('/tip/me/{id}',[TipController::class, 'getMeList']);
     Route::post('/tip/add',[TipController::class, 'publish']);
     Route::delete('/tip/{id}',[TipController::class, 'delete']);
     Route::put('/tip/{id}',[TipController::class, 'update']);

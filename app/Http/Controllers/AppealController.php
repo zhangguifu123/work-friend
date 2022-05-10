@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tip;
+use App\Models\Appeal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,9 +16,9 @@ class AppealController extends Controller
             return $data;
         }
         $data['status'] = 2;
-        $tip = new Tip($data);
-        if ($tip->save()) {
-            return msg(0,$tip->id);
+        $appeal = new Appeal($data);
+        if ($appeal->save()) {
+            return msg(0,$appeal->id);
         }
         //未知错误
         return msg(4, __LINE__);
@@ -30,7 +30,7 @@ class AppealController extends Controller
         if (!$request->route('id')) {
             return msg(3 , __LINE__);
         }
-        $worker   = Tip::query()->where([
+        $worker   = Appeal::query()->where([
             ['reporter', $request->route('id')],
             ['type', $request->input('type')]
         ])->get()->toArray();
@@ -43,15 +43,15 @@ class AppealController extends Controller
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
-        $tip = Tip::query();
-        $tipSum = $tip->count();
-        $tipList = $tip
+        $appeal = Appeal::query();
+        $appealSum = $appeal->count();
+        $appealList = $appeal
             ->limit(10)
             ->offset($offset)->orderByDesc("created_at")
             ->get()
             ->toArray();
-        $message['tipList'] = $tipList;
-        $message['total']    = $tipSum;
+        $message['AppealList'] = $appealList;
+        $message['total']    = $appealSum;
         $message['limit']    = $limit;
         if (isset($message['token'])){
             return msg(13,$message);
@@ -62,11 +62,11 @@ class AppealController extends Controller
     /** 删除 */
     public function delete(Request $request)
     {
-        $tip = Tip::query()->find($request->route('id'));
-        if (!$tip){
+        $appeal = Appeal::query()->find($request->route('id'));
+        if (!$appeal){
             return msg(11, __LINE__);
         }
-        $tip->delete();
+        $appeal->delete();
 
         return msg(0, __LINE__);
     }
@@ -81,9 +81,9 @@ class AppealController extends Controller
             return $data;
         }
         //修改
-        $tip = Tip::query()->find($request->route('id'));
-        $tip = $tip->update($data);
-        if ($tip) {
+        $appeal = Appeal::query()->find($request->route('id'));
+        $appeal = $appeal->update($data);
+        if ($appeal) {
             return msg(0, __LINE__);
         }
         return msg(4, __LINE__);
@@ -93,13 +93,18 @@ class AppealController extends Controller
     private function _dataHandle(Request $request = null){
         //声明理想数据格式
         $mod = [
+            "fromId"        => ["string"],
+            "toId"          => ["string"],
+            "toName"        => ["string"],
+            "fromName"      => ["string"],
+            "work_order_id" => ["string"],
+            "work"          => ["string"],
+            "measure"       => ["string"],
+            "fromType"      => ["string"],
+            "toType"        => ["string"],
             "img"           => ["json"],
-            "reporter"      => ["string"],
-            "worker_order_id"=> ["string"],
-            "company_id"    => ["string"],
-            "type"          => ["integer"],
             "content"       => ["string"],
-            "status"        => ["string", "nullable"],
+            "status"        => ["string", 'nullable'],
         ];
         //是否缺失参数
         if (!$request->has(array_keys($mod))){

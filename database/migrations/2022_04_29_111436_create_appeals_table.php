@@ -17,7 +17,7 @@ class CreateAppealsTable extends Migration
             $table->id();
             $table->string('fromId');
             $table->string('toId');
-            $table->string('toName');
+            $table->string('fromName');
             $table->string('toName');
             $table->string('work_order_id');
             $table->string('work');
