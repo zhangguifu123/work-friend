@@ -68,8 +68,6 @@ class WorkOrderController extends Controller
                     }
                 }
             }
-
-            die();
         }
         $workOrderList = $this->_isCollection($workerId, $workOrderList);
         $message['workOrderList'] = $workOrderList;
