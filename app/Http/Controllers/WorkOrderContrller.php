@@ -38,7 +38,7 @@ class WorkOrderController extends Controller
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
         $workOrder = WorkOrder::query();
-        if (!is_null($data['education']) {
+        if (!is_null($data['education'])) {
             $workOrder = $workOrder->whereIn('education', $data['education']);
         }
         $workOrderSum = $workOrder->count();
@@ -55,7 +55,6 @@ class WorkOrderController extends Controller
             ->toArray();
         if (!is_null($data['salary'])) {
             foreach ( $workOrderList as $workOrder ) {
-
                 $salary = json_decode($workOrder, true);
                 print_r($salary);die();
             }
