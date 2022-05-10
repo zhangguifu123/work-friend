@@ -58,7 +58,6 @@ class WorkOrderController extends Controller
             if ($data['type'] == 'partTime'){
                 foreach ( $workOrderList as $workOrder ) {
                     if ( $data['salary']['max'] >= $workOrder['salary'] && $data['salary']['min'] <= $workOrder['salary'] ) {
-                        print_r(1);
                         $newWorkOrderList[] = $workOrder;
                     }
                 }
@@ -70,7 +69,7 @@ class WorkOrderController extends Controller
                 }
             }
         }
-        $workOrderList = $this->_isCollection($workerId, $workOrderList);
+        $workOrderList = $this->_isCollection($workerId, $newWorkOrderList);
         $message['workOrderList'] = $workOrderList;
         $message['total']    = $workOrderSum;
         $message['limit']    = $limit;
