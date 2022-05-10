@@ -44,17 +44,40 @@ class ResumeController extends Controller
         if (!$request->input('companyId')){
             return msg(11, __LINE__);
         }
-        $companyId = $request->input('companyId');
+        $data      = $request->all();
+        $companyId = $data['companyId'];
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
         $resume = Resume::query();
+        if (!is_null($data['sex'])) {
+            $resume = $resume->where('sex', $data['sex']);
+        }
         $resumeSum = $resume->count();
         $resumeList = $resume
             ->limit(10)
             ->offset($offset)->orderByDesc("created_at")
             ->get()
             ->toArray();
+        $newResumeList = [];
+        if (is_array($data['salary'])) {
+            if ($data['type'] == 'partTime'){
+                foreach ( $resumeList as $resume ) {
+                    if ( $data['salary']['max'] >= $resume['salary'] && $data['salary']['min'] <= $resume['salary'] ) {
+                        $newResumeList[] = $resume;
+                    }
+                }
+            } else {
+                foreach ( $resumeList as $resume ) {
+                    $resume['salary'] = json_decode($resume['salary'], true);
+                    if ( $data['salary']['max'] >= $resume['salary']['max'] && $data['salary']['min'] <= $resume['salary']['min'] ) {
+                        $newresumeList[] = $resume;
+                    }
+                }
+            }
+        } else {
+            $newresumeList = $resumeList;
+        }
         $resumeList = $this->_isCollection($companyId, $resumeList);
         $message['resumeList'] = $resumeList;
         $message['total']    = $resumeSum;
