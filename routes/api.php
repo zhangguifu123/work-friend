@@ -13,6 +13,7 @@ use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\StatisticController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,6 +26,8 @@ use App\Http\Controllers\ImageController;
 */
 
 Route::namespace('Api')->group(function (){
+    //统计
+    Route::get('/statistics', [StatisticController::class, 'statistic']);
     //图片上传
     Route::post('/image', [ImageController::class, 'upload']);
     Route::post('/manager/login',[ManagerController::class, 'check']);
