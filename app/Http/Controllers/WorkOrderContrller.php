@@ -58,6 +58,7 @@ class WorkOrderController extends Controller
         if (is_array($data['salary'])) {
             if ($data['type'] == 'partTime'){
                 foreach ( $workOrderList as $workOrder ) {
+                    $workOrder['salary'] = json_decode($workOrder['salary'], true);
                     if ( $data['salary']['max'] >= $workOrder['salary'] && $data['salary']['min'] <= $workOrder['salary'] ) {
                         $newWorkOrderList[] = $workOrder;
                     }
