@@ -165,7 +165,7 @@ class WorkOrderController extends Controller
             "order_type"   => ["string"],
             "content"      => ["string"],
             "place"        => ["string"],
-            "salary"       => ["string"],
+            "salary"       => ["array"],
             "education"    => ["string"],
             "dateline"     => ["string"],
             "description"  => ["string", "nullable"],
