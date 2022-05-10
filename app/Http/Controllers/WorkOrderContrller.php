@@ -53,9 +53,10 @@ class WorkOrderController extends Controller
                 "work_orders.status",
             ])
             ->toArray();
-        var_dump(is_null($data['salary']));
         if (is_null($data['salary'])) {
+            print_r(1);
             foreach ( $workOrderList as $workOrder ) {
+                print_r(2);
                 $salary = $workOrder;
                 print_r($salary->max);die();
                 $salary = json_decode($workOrder, true);
