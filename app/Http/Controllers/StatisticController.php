@@ -34,6 +34,9 @@ class StatisticController extends Controller
             $workOrderIds[] = $value['work_order_id'];
         }
         $incomeCount = WorkOrder::query()->whereIn('id', array_unique($workOrderIds))->sum('service_charge');
-        print_r($incomeCount);
+        $statistics['incomeCount'] = $incomeCount;
+        $statistics['userCount']   = $userCount;
+        $statistics['orderCount']  = $orderCount;
+        return msg(0, $statistics);
     }
 }
