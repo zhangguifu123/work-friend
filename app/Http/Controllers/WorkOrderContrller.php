@@ -56,8 +56,9 @@ class WorkOrderController extends Controller
         if (!is_null($data['salary'])) {
             foreach ( $workOrderList as $workOrder ) {
                 $salary = json_decode($workOrder['salary'], true);
-                print_r($salary);die();
+                print_r($salary);
             }
+            die();
         }
         $workOrderList = $this->_isCollection($workerId, $workOrderList);
         $message['workOrderList'] = $workOrderList;
