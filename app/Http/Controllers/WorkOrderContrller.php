@@ -168,7 +168,7 @@ class WorkOrderController extends Controller
             "dateline"     => ["string"],
             "description"  => ["string", "nullable"],
             "service_charge" => ["string"],
-            "status"       => ["integer"],
+            "status"       => ["integer", 'nullable'],
         ];
         //是否缺失参数
         if (!$request->has(array_keys($mod))){
