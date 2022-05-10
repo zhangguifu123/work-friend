@@ -129,9 +129,9 @@ class WorkOrderController extends Controller
                     default :
                         return msg(4, __LINE__);
                         break;
-            default :
-                return msg(4, __LINE__);
-        }
+            }
+        default :
+            return msg(4, __LINE__);
     }
 
         return $workOrder;
