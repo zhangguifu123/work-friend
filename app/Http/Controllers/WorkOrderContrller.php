@@ -18,6 +18,7 @@ class WorkOrderController extends Controller
         }
         $data['collection_count'] = 0;
         $data['status'] = 2;
+        $data['salary'] = json_encode($data['salary']);
         $workOrder = new WorkOrder($data);
         if ($workOrder->save()) {
             return msg(0,$workOrder->id);
