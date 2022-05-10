@@ -20,7 +20,9 @@ class StatisticController extends Controller
         foreach ($company as $value) {
             $companyCount[] = $value->openid;
         }
-        print_r($workerCount);
+        $userCount = array_merge($companyCount, $workerCount);
+        $userCount = array_unique($userCount);
+        print_r($userCount);
 
     }
 }
