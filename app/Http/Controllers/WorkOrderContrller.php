@@ -54,7 +54,6 @@ class WorkOrderController extends Controller
             ])
             ->toArray();
         $newWorkOrderList = [];
-        var_dump(is_array($data['salary']));
         if (is_array($data['salary'])) {
             if ($data['type'] == 'partTime'){
                 foreach ( $workOrderList as $workOrder ) {
@@ -69,6 +68,8 @@ class WorkOrderController extends Controller
                     }
                 }
             }
+        } else {
+            $newWorkOrderList = $workOrderList;
         }
         $workOrderList = $this->_isCollection($workerId, $newWorkOrderList);
         $message['workOrderList'] = $workOrderList;
