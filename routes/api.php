@@ -81,5 +81,5 @@ Route::namespace('Api')->group(function (){
     Route::put('/workOrder/{id}',[WorkOrderController::class, 'update']);
     Route::get('/workOrder/{id}',[WorkOrderController::class, 'getOneOrder']);
     Route::get('/workOrder/me/{id}',[WorkOrderController::class, 'getMeList']);
-    Route::get('/workOrder/list/{page}',[WorkOrderController::class, 'getList']);
+    Route::post('/workOrder/list/{page}',[WorkOrderController::class, 'getList']);
 });
