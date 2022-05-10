@@ -15,8 +15,7 @@ class AlterTipsTable extends Migration
     {
         //
         Schema::table('tips', function (Blueprint $table) {
-            $table->string('type');
-            $table->string('status')->default(2);
+
         });
     }
 

@@ -3,25 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tip;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-class TipController extends Controller
+class AppealController extends Controller
 {
-    //发布赛事
+    //发布
     public function publish(Request $request){
         //通过路由获取前端数据，并判断数据格式
         $data = $this->_dataHandle($request);
         if (!is_array($data)) {
             return $data;
         }
-        $tip = new Tip($data);
         $data['status'] = 2;
+        $tip = new Tip($data);
         if ($tip->save()) {
             return msg(0,$tip->id);
         }
         //未知错误
         return msg(4, __LINE__);
+    }
+
+    /** 拉取列表信息 */
+    public function getMeList(Request $request)
+    {
+        if (!$request->route('id')) {
+            return msg(3 , __LINE__);
+        }
+        $worker   = Tip::query()->where([
+            ['reporter', $request->route('id')],
+            ['type', $request->input('type')]
+        ])->get()->toArray();
+        return msg(0, $worker);
     }
 
     /** 拉取列表信息 */
@@ -32,12 +45,17 @@ class TipController extends Controller
         $offset = $request->route("page") * $limit - $limit;
         $tip = Tip::query();
         $tipSum = $tip->count();
-        $tipList = $tip->limit(10)
+        $tipList = $tip
+            ->limit(10)
             ->offset($offset)->orderByDesc("created_at")
-            ->get()->toArray();
+            ->get()
+            ->toArray();
         $message['tipList'] = $tipList;
         $message['total']    = $tipSum;
         $message['limit']    = $limit;
+        if (isset($message['token'])){
+            return msg(13,$message);
+        }
         return msg(0, $message);
     }
 
@@ -45,11 +63,11 @@ class TipController extends Controller
     public function delete(Request $request)
     {
         $tip = Tip::query()->find($request->route('id'));
-
         if (!$tip){
-            return msg(11,__LINE__);
+            return msg(11, __LINE__);
         }
         $tip->delete();
+
         return msg(0, __LINE__);
     }
 
@@ -75,10 +93,13 @@ class TipController extends Controller
     private function _dataHandle(Request $request = null){
         //声明理想数据格式
         $mod = [
-            "user_name"      => ["string", "max:20"],
-            "user_id"       => ["string"],
-            "title"         => ["string", "max:20"],
-            "content"       => ["string", "nullable"],
+            "img"           => ["json"],
+            "reporter"      => ["string"],
+            "worker_order_id"=> ["string"],
+            "company_id"    => ["string"],
+            "type"          => ["integer"],
+            "content"       => ["string"],
+            "status"        => ["string", "nullable"],
         ];
         //是否缺失参数
         if (!$request->has(array_keys($mod))){
@@ -92,5 +113,4 @@ class TipController extends Controller
         };
         return $data;
     }
-
 }

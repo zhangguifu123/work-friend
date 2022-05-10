@@ -31,18 +31,19 @@ class WorkOrderController extends Controller
         if (!$request->input('workerId')){
             return msg(11, __LINE__);
         }
-        $workerId = $request->input('workerId');
+        $data     = $request->all();
+        $workerId = $data['workerId'];
+
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
-        $workOrder = $this->_select($request);
-        if (isset($workOrder['code'])){
-            $fall = $workOrder;
-            return $fall;
+        $workOrder = WorkOrder::query();
+        if (!is_null($data['education'])) {
+            $workOrder = $workOrder->whereIn('education', $data['education']);
         }
         $workOrderSum = $workOrder->count();
         $workOrderList = $workOrder
-            ->limit(10)
+            ->limit(10)->where('order_type', $data['type'])
             ->leftJoin('workers', 'work_orders.openid', '=', 'workers.openid')
             ->leftJoin('companies', 'work_orders.openid', '=', 'companies.openid')
             ->offset($offset)->orderByDesc("work_orders.created_at")
@@ -52,6 +53,14 @@ class WorkOrderController extends Controller
                 "work_orders.status",
             ])
             ->toArray();
+        if (is_null($data['salary'])) {
+            foreach ( $workOrderList as $workOrder ) {
+                $salary = $workOrder;
+                print_r($salary->max);die();
+                $salary = json_decode($workOrder, true);
+
+            }
+        }
         $workOrderList = $this->_isCollection($workerId, $workOrderList);
         $message['workOrderList'] = $workOrderList;
         $message['total']    = $workOrderSum;
@@ -61,81 +70,7 @@ class WorkOrderController extends Controller
         }
         return msg(0, $message);
     }
-    private function _select(Request $request)
-    {
-        $workOrder = WorkOrder::query();
-        $data = $request->input();
-        switch (true) {
-            case $request->input('order_type') == 'partTime';
-                switch (true) {
-                    case (is_null($data['salary']) && is_null($data['education'])):
-                        $workOrder = $workOrder->where('order_type', 'partTime');
-                        break;
-                    case (is_null($data['salary']) && !is_null($data['education'])):
-                        $workOrder = $workOrder->where('order_type', 'partTime')
-                            ->whereIn('education', $data['education']);
-                        break;
-                    case (!is_null($data['salary']) && is_null($data['education'])):
-                        $workOrder = $workOrder->where('order_type', 'partTime')
-                            ->whereIn('salary', $data['salary']);
-                        break;
-                    case (!is_null($data['salary']) && !is_null($data['education'])):
-                        $workOrder = $workOrder->where('order_type', 'partTime')
-                            ->whereIn('salary', $data['salary'])
-                            ->whereIn('education', $data['education']);
-                        break;
-                    default :
-                        return msg(4, __LINE__);
-                }
-                break;
-            case $request->input('order_type') == 'fullTime';
-                switch (true) {
-                    case (is_null($data['education']) && is_null($data['salary']) && is_null($data['company_size'])):
-                        $workOrder = $workOrder->where('order_type', 'fullTime');
-                        break;
-                    case (!is_null($data['education']) && !is_null($data['salary']) && !is_null($data['company_size'])):
-                        $workOrder = $workOrder->where('order_type', 'fullTime')
-                            ->whereIn('salary', $data['salary'])
-                            ->whereIn('education', $data['education'])
-                            ->whereIn('company_size', $data['company_size']);
-                        break;
-                    case (!is_null($data['education']) && is_null($data['salary']) && is_null($data['company_size'])):
-                        $workOrder = $workOrder->where('order_type', 'fullTime')
-                            ->whereIn('education', $data['education']);
-                        break;
-                    case (is_null($data['education']) && !is_null($data['salary']) && is_null($data['company_size'])):
-                        $workOrder = $workOrder->where('order_type', 'fullTime')
-                            ->whereIn('salary', $data['salary']);
-                        break;
-                    case (is_null($data['education']) && is_null($data['salary']) && !is_null($data['company_size'])):
-                        $workOrder = $workOrder->where('order_type', 'fullTime')
-                            ->whereIn('company_size', $data['company_size']);
-                        break;
-                    case (!is_null($data['education']) && !is_null($data['salary']) && is_null($data['company_size'])):
-                        $workOrder = $workOrder->where('order_type', 'fullTime')
-                            ->whereIn('salary', $data['salary'])
-                            ->whereIn('education', $data['education']);
-                        break;
-                    case (is_null($data['education']) && !is_null($data['salary']) && !is_null($data['company_size'])):
-                        $workOrder = $workOrder->where('order_type', 'fullTime')
-                            ->whereIn('education', $data['education'])
-                            ->whereIn('company_size', $data['company_size']);
-                        break;
-                    case (!is_null($data['education']) && is_null($data['salary']) && !is_null($data['company_size'])):
-                        $workOrder = $workOrder->where('order_type', 'fullTime')
-                            ->whereIn('salary', $data['salary'])
-                            ->whereIn('company_size', $data['company_size']);
-                        break;
-                    default :
-                        return msg(4, __LINE__);
-                        break;
-            }
-        default :
-            return msg(4, __LINE__);
-    }
 
-        return $workOrder;
-    }
     private function _isCollection($workerId, $resumeList){
         $workOrderCollection = WorkerOrderCollection::query()->where('worker_id', $workerId)->get()->toArray();
         $collectionArray  = [];

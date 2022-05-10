@@ -15,6 +15,18 @@ class CreateAppealsTable extends Migration
     {
         Schema::create('appeals', function (Blueprint $table) {
             $table->id();
+            $table->string('fromId');
+            $table->string('toId');
+            $table->string('toName');
+            $table->string('toName');
+            $table->string('work_order_id');
+            $table->string('work');
+            $table->string('measure')->default('无');
+            $table->string('content');
+            $table->string('fromType');
+            $table->string('toType');
+            $table->string('status')->default(2);
+            $table->json('img');
             $table->timestamps();
         });
     }
