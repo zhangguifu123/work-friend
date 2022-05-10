@@ -60,25 +60,16 @@ class ResumeController extends Controller
             ->get()
             ->toArray();
         $newResumeList = [];
-        if (is_array($data['salary'])) {
-            if ($data['type'] == 'partTime'){
-                foreach ( $resumeList as $resume ) {
-                    if ( $data['salary']['max'] >= $resume['salary'] && $data['salary']['min'] <= $resume['salary'] ) {
-                        $newResumeList[] = $resume;
-                    }
-                }
-            } else {
-                foreach ( $resumeList as $resume ) {
-                    $resume['salary'] = json_decode($resume['salary'], true);
-                    if ( $data['salary']['max'] >= $resume['salary']['max'] && $data['salary']['min'] <= $resume['salary']['min'] ) {
-                        $newresumeList[] = $resume;
-                    }
+        if (is_array($data['age'])) {
+            foreach ( $resumeList as $resume ) {
+                if ( $data['sex']['max'] >= $resume['sex'] && $data['sex']['min'] <= $resume['sex'] ) {
+                    $newResumeList[] = $resume;
                 }
             }
         } else {
-            $newresumeList = $resumeList;
+            $newResumeList = $resumeList;
         }
-        $resumeList = $this->_isCollection($companyId, $resumeList);
+        $resumeList = $this->_isCollection($companyId, $newResumeList);
         $message['resumeList'] = $resumeList;
         $message['total']    = $resumeSum;
         $message['limit']    = $limit;
