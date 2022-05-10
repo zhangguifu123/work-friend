@@ -55,7 +55,7 @@ class WorkOrderController extends Controller
             ->toArray();
         if (!is_null($data['salary'])) {
             foreach ( $workOrderList as $workOrder ) {
-                $salary = json_decode($workOrder, true);
+                $salary = json_decode($workOrder['salary'], true);
                 print_r($salary);die();
             }
         }
