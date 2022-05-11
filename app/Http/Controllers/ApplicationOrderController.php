@@ -23,12 +23,14 @@ class ApplicationOrderController extends Controller
             ['worker_id',     $data['worker_id']],
         ])->first();
         if ($check){
+            print_r(1);
             $check = ApplicationOrder::query()->where([
                 ['work_order_id', $data['work_order_id']],
                 ['worker_id',     $data['worker_id']],
                 ['status',        4],
             ])->first();
             if ($check) {
+                print_r(2);
                 $check->status = 2;
                 $check->update();
                 return msg(0, $check->id);
