@@ -172,7 +172,7 @@ class WorkOrderController extends Controller
             "education"    => ["string"],
             "dateline"     => ["string"],
             "description"  => ["string", "nullable"],
-            "service_charge" => ["int"],
+            "service_charge" => ["integer"],
             "status"       => ["integer", 'nullable'],
         ];
         //是否缺失参数
