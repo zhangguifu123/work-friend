@@ -32,7 +32,7 @@ class AppealController extends Controller
         }
         $worker   = Appeal::query()->where([
             ['fromId', $request->route('id')],
-            ['toType', $request->input('type')]
+            ['fromType', $request->input('type')]
         ])->get()->toArray();
         return msg(0, $worker);
     }
