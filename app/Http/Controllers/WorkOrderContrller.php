@@ -168,12 +168,12 @@ class WorkOrderController extends Controller
             "order_type"   => ["string"],
             "content"      => ["string"],
             "place"        => ["string"],
-            "salary"       => ["array"],
+            "salary"       => ["array" || 'string'],
             "education"    => ["string"],
             "dateline"     => ["string"],
             "description"  => ["string", "nullable"],
-//            "service_charge" => ["required"],
-//            "status"       => ["integer", 'nullable'],
+            "service_charge" => ["required"],
+            "status"       => ["integer", 'nullable'],
         ];
         //是否缺失参数
         if (!$request->has(array_keys($mod))){
