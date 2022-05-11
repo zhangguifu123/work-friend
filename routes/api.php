@@ -52,7 +52,7 @@ Route::namespace('Api')->group(function (){
     Route::put('/notice/{id}',[NoticeController::class, 'update']);
     //申诉Appeal
     Route::get('/appeal/list/{page}',[AppealController::class, 'getList']);
-    Route::get('/appeal/me/{page}',[AppealController::class, 'getMeList']);
+    Route::get('/appeal/me/{id}',[AppealController::class, 'getMeList']);
     Route::post('/appeal/add',[AppealController::class, 'publish']);
     Route::delete('/appeal/{id}',[AppealController::class, 'delete']);
     Route::put('/appeal/{id}',[AppealController::class, 'update']);
