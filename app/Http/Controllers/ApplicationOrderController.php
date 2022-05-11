@@ -33,7 +33,7 @@ class ApplicationOrderController extends Controller
                 $check->update();
                 return msg(0, $check->id);
             }
-            return msg(4, __LINE__);
+            return msg(8, __LINE__);
         }
         $applicationOrder = new ApplicationOrder($data);
         if ($applicationOrder->save()) {
