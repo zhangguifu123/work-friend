@@ -40,7 +40,7 @@ Route::namespace('Api')->group(function (){
     Route::delete('/collection/resume/{id}',[CollectionController::class, 'deleteResumeCollection']);
     Route::delete('/collection/workerOrder/{id}',[CollectionController::class, 'deleteWorkOrderCollection']);
     //Resume
-    Route::get('/resume/list/{page}',[ResumeController::class, 'getList']);
+    Route::post('/resume/list/{page}',[ResumeController::class, 'getList']);
     Route::get('/resume/me/{id}',[ResumeController::class, 'getMeList']);
     Route::post('/resume/add',[ResumeController::class, 'publish']);
     Route::delete('/resume/{id}',[ResumeController::class, 'delete']);
