@@ -62,9 +62,9 @@ class ResumeController extends Controller
         $newResumeList = [];
         if (is_array($data['age'])) {
             foreach ( $resumeList as $resume ) {
-                $resume['sex'] = json_decode($resume['sex'], true);
-                if ( $data['sex']['max'] >= $resume['sex']['max'] && $data['sex']['min'] <= $resume['sex']['min'] ) {
-                    $resume['sex'] = json_encode($resume['sex'], true);
+                $resume['age'] = json_decode($resume['age'], true);
+                if ( $data['age']['max'] >= $resume['age']['max'] && $data['age']['min'] <= $resume['age']['min'] ) {
+                    $resume['age'] = json_encode($resume['age'], true);
                     $newResumeList[] = $resume;
                 }
             }
