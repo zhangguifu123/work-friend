@@ -50,7 +50,7 @@ class ResumeController extends Controller
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
         $resume = Resume::query();
-        if (!is_array($data['sex'])) {
+        if (is_array($data['sex'])) {
             $resume = $resume->whereIn('sex', $data['sex']);
         }
         $resumeSum = $resume->count();
