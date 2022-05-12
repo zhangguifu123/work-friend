@@ -34,7 +34,7 @@ class ResumeController extends Controller
         }
         $worker   = Resume::query()->where(
             'openid', $request->route('id')
-        )->first();
+        )->get()->toArray();
         return msg(0, $worker);
     }
 
