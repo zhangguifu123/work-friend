@@ -33,7 +33,6 @@ class WorkOrderController extends Controller
             return msg(11, __LINE__);
         }
         $data     = $request->all();
-        print_r($data);die();
         $workerId = $data['workerId'];
 
         //分页，每页10条
