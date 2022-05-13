@@ -38,13 +38,13 @@ class WorkOrderController extends Controller
         //分页，每页10条
         $limit = 10;
         $offset = $request->route("page") * $limit - $limit;
-        $workOrder = WorkOrder::query();
+        $workOrder = WorkOrder::query()->where('order_type', $data['type']);
+        $workOrderSum = $workOrder->count();
         if (!is_null($data['education'])) {
             $workOrder = $workOrder->whereIn('education', $data['education']);
         }
-        $workOrderSum = $workOrder->count();
         $workOrderList = $workOrder
-            ->limit(10)->where('order_type', $data['type'])
+            ->limit(10)
             ->leftJoin('workers', 'work_orders.openid', '=', 'workers.openid')
             ->leftJoin('companies', 'work_orders.openid', '=', 'companies.openid')
             ->offset($offset)->orderByDesc("work_orders.created_at")
