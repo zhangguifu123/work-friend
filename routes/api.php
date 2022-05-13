@@ -32,9 +32,9 @@ Route::namespace('Api')->group(function (){
     //图片上传
     Route::post('/image', [ImageController::class, 'upload']);
     Route::post('/manager/login',[ManagerController::class, 'check']);
-    Route::delete('/manager/{id}',[ManagerController::class, 'add']);
+    Route::delete('/manager/{id}',[ManagerController::class, 'delete']);
     Route::get('/manager/list',[ManagerController::class, 'getList']);
-    Route::post('/manager/add',[ManagerController::class, 'delete']);
+    Route::post('/manager/add',[ManagerController::class, 'add']);
     //Collection
     Route::get('/collection/resume/{id}',[CollectionController::class, 'getCompanyCollectionList']);
     Route::get('/collection/workerOrder/{id}',[CollectionController::class, 'getWorkerCollectionList']);
