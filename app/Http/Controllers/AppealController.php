@@ -95,6 +95,8 @@ class AppealController extends Controller
         $mod = [
             "fromId"        => ["string"],
             "toId"          => ["string"],
+            "fromOpenid"    => ["string"],
+            "toOpenid"      => ["string"],
             "toName"        => ["string"],
             "fromName"      => ["string"],
             "work_order_id" => ["string"],
