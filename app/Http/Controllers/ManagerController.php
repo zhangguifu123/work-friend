@@ -99,7 +99,8 @@ class ManagerController extends Controller
         $manager = Manager::query()->find($request->route("id"));
         $isManager = $request->header('Authorization');
         $Authorization    = substr($isManager, 7);
-        $level  = Manager::query()->where('api_token', $Authorization)->first();        if (!$manager) {
+        $level  = Manager::query()->where('api_token', $Authorization)->first()->level;
+        if (!$manager) {
             return msg(3, "目标不存在" . __LINE__);
         } else if((int)$level > 0) {
             return msg(3, "权限不足" .__LINE__);
