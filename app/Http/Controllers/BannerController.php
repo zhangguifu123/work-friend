@@ -9,9 +9,12 @@ class BannerController extends Controller
 {
     //
     public function upload(Request $request) {
-        if (!$request->input('image')) {
+        if (!$request->input('image')  || !$request->input('managerId') || !$request->input('managerName')) {
             return msg(3 , __LINE__);
         }
+        $data = $request->all();
+        $data['manager_id'] = $data['managerId'];
+        $data['manager_name'] = $data['managerName'];
         $banner   = new Banner(['image' => $request->input('image')]);
         $banner->save();
         return msg(0, $banner);
