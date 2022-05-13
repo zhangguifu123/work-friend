@@ -101,7 +101,7 @@ class ManagerController extends Controller
         $Authorization    = substr($isManager, 7);
         $level  = Manager::query()->where('api_token', $Authorization)->first();        if (!$manager) {
             return msg(3, "目标不存在" . __LINE__);
-        } else if($level > 0) {
+        } else if((int)$level > 0) {
             return msg(3, "权限不足" .__LINE__);
         }
         $result = $manager->delete();
