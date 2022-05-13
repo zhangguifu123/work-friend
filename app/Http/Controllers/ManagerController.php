@@ -35,7 +35,9 @@ class ManagerController extends Controller
     {
         return Manager::create([
             'phone' => $data['phone'],
-            'status' => $data['status'],
+            'department' => $data['department'],
+            'level' => $data['level'],
+            'name' => $data['name'],
             'password' => Hash::make($data['password']),
             'api_token' => Str::random(60),
         ]);
@@ -45,7 +47,7 @@ class ManagerController extends Controller
             'phone'    => ['regex:/^[^\s]{8,20}$/'],
             'password' => ['regex:/^[^\s]{8,20}$/'],
             'department' => ['string'],
-            'level' => ['string'],
+            'level' => ['integer'],
             'name' => ['string'],
         );
         $requestTest = handleData($request,$params);
