@@ -54,6 +54,7 @@ class ManagerController extends Controller
         if(!is_object($requestTest)){
             return $requestTest;
         }
+        print_r(1);
         //提取数据
         $data = $request->only(array_keys($params));
         $isManager = $request->header('Authorization');
@@ -98,6 +99,7 @@ class ManagerController extends Controller
     {
         $manager = Manager::query()->find($request->route("id"));
         if (!$manager) {
+            print_r(3);
             return msg(3, "目标不存在" . __LINE__);
         } else if($manager->level > 0) {
             return msg(3, "权限不足" .__LINE__);
