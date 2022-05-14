@@ -102,7 +102,7 @@ class CollectionController extends Controller
             ->orderByDesc("work_orders.created_at")
             ->get([
                 "worker_order_collections.id as collectionId", "companies.id as company_id", "workers.id as worker_id", "work_orders.id", "work_orders.openid" , "workers.name as worker_name", "workers.avatar as worker_avatar",
-                "work_order.status", "user_type", "order_type", "companies.name as company_name", "companies.avatar as company_avatar", "content", "place", "salary", "education", "dateline", "service_charge", "description", "collection_count",
+                "work_orders.status", "user_type", "order_type", "companies.name as company_name", "companies.avatar as company_avatar", "content", "place", "salary", "education", "dateline", "service_charge", "description", "collection_count",
             ])
             ->toArray();
         return msg(0, $workOrderList);
