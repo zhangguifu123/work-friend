@@ -38,6 +38,16 @@ class AppealController extends Controller
     }
 
     /** 拉取列表信息 */
+    public function getOneList(Request $request)
+    {
+        if (!$request->route('id')) {
+            return msg(3 , __LINE__);
+        }
+        $worker   = Appeal::query()->find($request->route('id'));
+        return msg(0, $worker);
+    }
+
+    /** 拉取列表信息 */
     public function getList(Request $request)
     {
         //分页，每页10条

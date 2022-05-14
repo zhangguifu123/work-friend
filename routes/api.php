@@ -58,6 +58,7 @@ Route::namespace('Api')->group(function (){
     Route::get('/appeal/me/{id}',[AppealController::class, 'getMeList']);
     Route::post('/appeal/add',[AppealController::class, 'publish']);
     Route::delete('/appeal/{id}',[AppealController::class, 'delete']);
+    Route::get('/appeal/{id}',[AppealController::class, 'getOneList']);
     Route::put('/appeal/{id}',[AppealController::class, 'update']);
     //反馈Tip
     Route::get('/tip/list/{page}',[TipController::class, 'getList']);
