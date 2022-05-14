@@ -78,6 +78,8 @@ Route::namespace('Api')->group(function (){
     //Banner
     Route::post('/banner/upload',[BannerController::class, 'upload']);
     Route::get('/banner/list/{page}',[BannerController::class, 'getList']);
+    Route::delete('/banner/{id}',[BannerController::class, 'delete']);
+
     //应聘订单
     Route::post('/applicationOrder/add',[ApplicationOrderController::class, 'make']);
     Route::delete('/applicationOrder/{id}',[ApplicationOrderController::class, 'delete']);
