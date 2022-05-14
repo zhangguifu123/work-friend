@@ -18,6 +18,18 @@ class BannerController extends Controller
         return msg(0, $banner);
     }
 
+    public function delete (Request $request) {
+        if (!$request->route('id')) {
+            return msg(3 , __LINE__);
+        }
+        $banner =  Banner::query()->find($request->route('id'));
+        if (!$banner) {
+            return msg(11, __LINE__);
+        }
+        $banner->delete();
+        return msg(0, __LINE__);
+    }
+
     public function getList(Request $request) {
         if (!$request->route('page')){
             return msg(1, __LINE__);
