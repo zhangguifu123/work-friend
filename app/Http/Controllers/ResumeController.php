@@ -145,10 +145,10 @@ class ResumeController extends Controller
             "position" => ["string"],
             "city"     => ["string"],
 
-            "education_experience" => ["string"],
-            "internship_experience" => ["string"],
-            "project_experience"    => ["string"],
-            "self_assessment"       => ["string"],
+            "education_experience" => ["string", "nullable"],
+            "internship_experience" => ["string", "nullable"],
+            "project_experience"    => ["string", "nullable"],
+            "self_assessment"       => ["string", "nullable"],
         ];
         //是否缺失参数
         if (!$request->has(array_keys($mod))){
