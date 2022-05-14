@@ -66,6 +66,10 @@ class ManagerController extends Controller
         if ($level != 0 ) {
             return msg(10, __LINE__);
         }
+        $check = Manager::query()->where('phone', $data['phone'])->first();
+        if ($check) {
+            return msg(8, __LINE__);
+        }
         $manager = $this->create($data);
         return msg(0, $manager);
     }
