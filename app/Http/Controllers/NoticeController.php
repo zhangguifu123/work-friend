@@ -32,7 +32,7 @@ class NoticeController extends Controller
         }
         $worker   = Notice::query()->where([
             ['openid', $request->route('id')],
-            ['status', 2]
+            ['status', 1]
         ])->get()->toArray();
         return msg(0, $worker);
     }
